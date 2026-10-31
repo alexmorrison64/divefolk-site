@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DiveFolk Logbook</title>
+<meta name="description" content="Bring in your dive computer's dives, join split dives, fix wrong times, and download a clean log. Free, in your browser.">
+<link rel="canonical" href="https://divefolk.com/logbook.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DiveFolk">
+<meta property="og:title" content="DiveFolk Logbook">
+<meta property="og:description" content="Bring in your dive computer's dives, join split dives, fix wrong times, and download a clean log. Free, in your browser.">
+<meta property="og:url" content="https://divefolk.com/logbook.html">
+<meta property="og:image" content="https://divefolk.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="index.html"><img src="img/turtle-icon.png" alt="" width="44" height="43"><span>DiveFolk</span></a>
+  <nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="logbook.html" aria-current="page">Logbook</a><a href="commons.html">Commons</a><a href="about.html">About</a><a class="join" href="join.html">Join free</a></nav>
+</div></header>
+<main>
+
+<section class="page-head"><div class="wrap">
+  <div>
+    <p class="eyebrow">DiveFolk Logbook <span class="chip beta" style="margin-left:8px">Beta</span></p>
+    <h1>Clean up your dive log</h1>
+    <p class="lede">Add the files from your dive computer, check how DiveFolk grouped them, then download your log. Nothing is uploaded; it all happens in this browser window.</p>
+  </div>
+  <img src="img/turtle-swim.png" alt="" width="544" height="404">
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap tool">
+  <div class="card" id="add">
+    <h2>1. Add your dives</h2>
+    <label class="drop" id="drop">
+      <input type="file" id="file" accept=".uddf,.xml" multiple class="visually-hidden">
+      <strong>Drop your UDDF files here</strong>
+      <span>or click to choose them from your computer</span>
+    </label>
+    <div class="actions" style="align-items:center">
+      <button class="btn ghost" id="sample" type="button">Try it with example dives</button>
+      <p class="small muted" id="loadmsg">In Shearwater Cloud: select your dives, then File, Export, As UDDF.</p>
+    </div>
+  </div>
+
+  <div class="card" id="review" hidden>
+    <h2>2. Check your dives</h2>
+    <div class="stats" id="stats"></div>
+    <details>
+      <summary><strong>What do these columns mean?</strong></summary>
+      <dl class="legend" style="margin-top:12px">
+        <dt>Same dive</dt><dd>DiveFolk joins pieces your computer split apart, such as a quick trip to the surface or a false start. Untick it to keep them as separate dives.</dd>
+        <dt>Use piece</dt><dd>Untick to leave one piece out, for example a training exercise before the real dive.</dd>
+        <dt>Log it</dt><dd>Untick to skip a dive, such as a pool session.</dd>
+        <dt>Clock fix</dt><dd>If your computer was on the wrong time zone, move the dive by whole hours.</dd>
+      </dl>
+    </details>
+    <label>First dive number <input type="number" id="startnum" value="1" min="1"></label>
+    <div class="tablewrap"><table>
+      <thead><tr>
+        <th>Log it</th><th>Dive #</th><th>Same dive</th><th>Use piece</th><th>Clock fix</th><th>Date</th><th>Start</th>
+        <th class="num">Minutes</th><th class="num">Max ft</th><th class="num">Min &deg;F</th>
+        <th class="num">Start psi</th><th class="num">End psi</th><th>Computer #</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+  </div>
+
+  <div class="card" id="export" hidden>
+    <h2>3. Download your log</h2>
+    <div class="actions">
+      <button class="btn" id="csv" type="button">Download spreadsheet (CSV)</button>
+      <button class="btn ghost" id="dl7" type="button">Download DL7 file (.zxu)</button>
+    </div>
+    <p class="small muted">The CSV opens in any spreadsheet. DL7 is the dive log format from DAN (Divers Alert Network); some dive log programs can import it. Each dive includes depth, water temperature and tank pressure readings.</p>
+  </div>
+</div></section>
+
+</main>
+<footer class="site-foot"><div class="wrap">
+  <nav aria-label="Footer"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html">DiveFolk Commons</a><a href="tech.html">Technology Explained</a><a href="ai.html">DiveFolk AI</a><a href="resources.html">Other Resources</a><a href="news.html">DiveFolk News</a><a href="trips.html">DiveFolk Trips</a><a href="about.html">About</a><a href="join.html">Join</a><a href="privacy.html">Privacy</a></nav>
+  <p>DiveFolk is free and independent. It is not affiliated with PADI, DAN, Shearwater or any dive computer maker; their names are used only to say what DiveFolk works with.</p>
+  <p>&copy; 2026 DiveFolk</p>
+</div></footer>
+<script src="core.js"></script>
+<script>
+(function () {
+  const C = window.DivefolkCore;
+  let dives = [], join = [], include = [], dropPiece = [], shift = {};
+  const $ = id => document.getElementById(id);
+  const p2 = n => String(n).padStart(2, '0');
+  const ft = m => Math.round(m * 3.28084);
+  const fahr = k => k == null ? '' : Math.round((k - 273.15) * 9 / 5 + 32);
+  const psi = b => b == null ? '' : Math.round(b * 14.5038).toLocaleString();
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const hr12 = (h, m) => `${(h % 12) || 12}:${p2(m)} ${h < 12 ? 'AM' : 'PM'}`;
+
+  async function load(files, label) {
+    let raw = [], bad = [];
+    for (const f of files) {
+      try { raw = raw.concat(C.parseUDDF(await f.text(), DOMParser, f.name)); }
+      catch (e) { bad.push(f.name); }
+    }
+    dives = C.normalize(dives.concat(raw));
+    join = C.suggestSplits(dives);
+    include = dives.map(() => true);
+    dropPiece = dives.map(() => false);
+    shift = {};
+    $('loadmsg').innerHTML = `${label || 'Loaded'} ${dives.length} dive piece${dives.length === 1 ? '' : 's'}.` +
+      (bad.length ? ` <span class="warn">Could not read: ${bad.join(', ')}. Check that it is a UDDF file.</span>` : '');
+    render();
+  }
+
+  function groups() { let head = 0; return dives.map((d, i) => (i === 0 || !join[i]) ? (head = i) : head); }
+
+  function logged() {
+    const all = C.mergeDives(dives, join, { drop: dropPiece, shiftHours: shift });
+    const keep = all.filter(d => include[d.headIndex]);
+    const start = Math.max(1, parseInt($('startnum').value, 10) || 1);
+    keep.forEach((d, k) => d.logNumber = start + k);
+    return keep;
+  }
+
+  function render() {
+    const g = groups(), nums = {}, size = {};
+    logged().forEach(d => { nums[d.headIndex] = d.logNumber; });
+    g.forEach(h => { size[h] = (size[h] || 0) + 1; });
+    const shown = (d, i) => {
+      const h = shift[g[i]] || 0;
+      if (!h) return d.start;
+      const x = new Date((d.start.epoch + h * 3600) * 1000);
+      return { y: x.getUTCFullYear(), mo: x.getUTCMonth() + 1, d: x.getUTCDate(), h: x.getUTCHours(), mi: x.getUTCMinutes() };
+    };
+    const fixOpts = h => [-2, -1, 0, 1, 2].map(v => `<option value="${v}" ${v === h ? 'selected' : ''}>${v > 0 ? '+' + v + ' h' : v === 0 ? 'none' : v + ' h'}</option>`).join('');
+    $('rows').innerHTML = dives.map((d, i) => {
+      const head = g[i] === i, on = include[g[i]] && !dropPiece[i], t = shown(d, i);
+      return `<tr class="${head ? '' : 'part'} ${on ? '' : 'off'}">
+        <td>${head ? `<input type="checkbox" aria-label="Log dive" data-inc="${i}" ${include[i] ? 'checked' : ''}>` : ''}</td>
+        <td>${head && nums[i] ? nums[i] : ''}</td>
+        <td class="first">${i > 0 ? `<input type="checkbox" aria-label="Same dive as the one above" data-join="${i}" ${join[i] ? 'checked' : ''}>` : ''}</td>
+        <td>${size[g[i]] > 1 ? `<input type="checkbox" aria-label="Use this piece" data-use="${i}" ${dropPiece[i] ? '' : 'checked'}>` : ''}</td>
+        <td>${head ? `<select aria-label="Clock fix" data-shift="${i}">${fixOpts(shift[i] || 0)}</select>` : ''}</td>
+        <td>${MONTHS[t.mo - 1]} ${t.d}, ${t.y}</td><td>${hr12(t.h, t.mi)}</td>
+        <td class="num">${Math.round(d.duration / 60)}</td><td class="num">${ft(d.maxDepth)}</td>
+        <td class="num">${fahr(d.minTempK)}</td><td class="num">${psi(d.tankBeginBar)}</td><td class="num">${psi(d.tankEndBar)}</td>
+        <td>${d.computerNumber ?? ''}${!head ? ' <span class="tag">joined</span>' : ''}</td></tr>`;
+    }).join('');
+    const L = logged();
+    $('stats').innerHTML =
+      `<div class="stat"><b>${dives.length}</b>pieces from the computer</div>` +
+      `<div class="stat"><b>${join.filter(Boolean).length}</b>joined to the dive before</div>` +
+      `<div class="stat"><b>${L.length}</b>dives to log</div>`;
+    $('review').hidden = !dives.length;
+    $('export').hidden = !dives.length;
+    $('dl7').disabled = $('csv').disabled = !L.length;
+  }
+
+  function save(text, name, type) {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type }));
+    a.download = name;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  }
+
+  $('rows').addEventListener('change', e => {
+    const el = e.target;
+    if (el.dataset.inc) include[+el.dataset.inc] = el.checked;
+    if (el.dataset.use) dropPiece[+el.dataset.use] = !el.checked;
+    if (el.dataset.shift) shift[+el.dataset.shift] = parseInt(el.value, 10) || 0;
+    if (el.dataset.join) { const i = +el.dataset.join; join[i] = el.checked; if (!el.checked) include[i] = include[groups()[i - 1]]; }
+    render();
+  });
+  $('startnum').addEventListener('input', render);
+  $('file').addEventListener('change', e => load(Array.from(e.target.files)));
+  $('sample').addEventListener('click', async () => {
+    try {
+      const text = await (await fetch('sample.uddf')).text();
+      dives = [];
+      await load([{ name: 'example dives', text: async () => text }], 'Loaded example dives:');
+    } catch (e) { $('loadmsg').textContent = 'The example dives could not be loaded.'; }
+  });
+  const drop = $('drop');
+  ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+  ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+  drop.addEventListener('drop', e => load(Array.from(e.dataTransfer.files)));
+  const day = () => { const d = new Date(); return `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}`; };
+  $('dl7').addEventListener('click', () => save(C.toDL7(logged()), `divefolk-logbook-${day()}.zxu`, 'text/plain'));
+  $('csv').addEventListener('click', () => save(C.toCSV(logged()), `divefolk-logbook-${day()}.csv`, 'text/csv'));
+})();
+</script>
+</body>
+</html>

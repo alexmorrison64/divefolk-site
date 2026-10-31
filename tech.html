@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Technology Explained</title>
+<meta name="description" content="Plain-language guides to dive computers, gradient factors, air integration, dive data files and backing up your dive log.">
+<link rel="canonical" href="https://divefolk.com/tech.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DiveFolk">
+<meta property="og:title" content="Technology Explained">
+<meta property="og:description" content="Plain-language guides to dive computers, gradient factors, air integration, dive data files and backing up your dive log.">
+<meta property="og:url" content="https://divefolk.com/tech.html">
+<meta property="og:image" content="https://divefolk.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="index.html"><img src="img/turtle-icon.png" alt="" width="44" height="43"><span>DiveFolk</span></a>
+  <nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html" aria-current="page">Commons</a><a href="about.html">About</a><a class="join" href="join.html">Join free</a></nav>
+</div></header>
+<main>
+
+<div class="subbar"><div class="wrap"><nav class="subnav" aria-label="DiveFolk Commons sections"><a href="commons.html">Commons home</a><a href="tech.html" aria-current="page">Technology Explained</a><a href="ai.html">DiveFolk AI</a><a href="resources.html">Other Resources</a><a href="news.html">DiveFolk News</a><a href="trips.html">DiveFolk Trips</a></nav></div></div>
+<section class="page-head"><div class="wrap">
+  <div>
+    <p class="eyebrow">DiveFolk Commons &middot; Technology Explained</p>
+    <h1>Your dive tech, in plain words</h1>
+    <p class="lede">Short guides to the technology divers use every day. They explain how things work; your training, your dive computer's manual and your instructor come first.</p>
+  </div>
+  <img src="img/turtle-explore.png" alt="" width="560" height="297">
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap stack" style="gap:28px">
+  <nav class="topics" aria-label="Guides"><a href="#computer">Dive computer basics</a><a href="#gf">Gradient factors</a><a href="#ai-tx">Air integration</a><a href="#formats">Dive data files</a><a href="#backup">Back up your log</a><a href="#next">Coming next</a></nav>
+
+  <article class="card guide" id="computer">
+    <h2>Dive computer basics</h2>
+    <p>Your dive computer tracks your depth and time and uses a decompression model to estimate how much nitrogen your body has taken on. From that, it shows a few numbers that matter most:</p>
+    <ul class="checks">
+      <li><b>No-decompression limit (NDL).</b> How many more minutes you can stay at your current depth and still ascend directly to the surface, with a safety stop.</li>
+      <li><b>Ascent rate.</b> Most computers warn you if you come up too fast. Slow ascents are one of the simplest safety habits.</li>
+      <li><b>Safety stop.</b> Many computers count down a stop near 15 feet at the end of a dive.</li>
+      <li><b>Gas.</b> If you dive nitrox, your computer needs the right oxygen percentage set before the dive.</li>
+      <li><b>Surface interval and no-fly time.</b> After a dive, many computers show time since surfacing and how long to wait before flying.</li>
+    </ul>
+    <p class="small muted">Every computer is different. Read your manual, and practice with your settings on easy dives first.</p>
+  </article>
+
+  <article class="card guide" id="gf">
+    <h2>Gradient factors, explained</h2>
+    <p>Many computers, including Shearwater and Garmin dive computers, use a decompression model called B&uuml;hlmann. Gradient factors are two percentages that make that model more or less conservative.</p>
+    <ul class="checks">
+      <li><b>GF high</b> sets how close to the model's limit you can be when you reach the surface. For most recreational diving, this is the number that matters most. A lower GF high means shorter no-deco times and more margin.</li>
+      <li><b>GF low</b> mainly shapes deeper stops on dives that need decompression, so it rarely affects typical recreational dives.</li>
+      <li>Settings like "low, medium, high" conservatism are usually preset gradient factor pairs.</li>
+    </ul>
+    <p>No setting guarantees safety; decompression sickness can happen inside a computer's limits. If you're unsure which setting to use, choose the more conservative one and ask your instructor.</p>
+    <p class="small muted">Source: <a href="https://dan.org/alert-diver/article/gradient-factors/" rel="noopener">DAN Alert Diver, "Gradient Factors"</a></p>
+  </article>
+
+  <article class="card guide" id="ai-tx">
+    <h2>Air integration</h2>
+    <p>With air integration, a small transmitter screws into your regulator's first stage and sends your tank pressure wirelessly to your dive computer. The computer can then show your pressure, your gas use and an estimate of time remaining.</p>
+    <ul class="checks">
+      <li>The transmitter has to be paired with your computer and has its own battery.</li>
+      <li>Signals can drop out briefly, especially when another diver's transmitter is close by.</li>
+      <li>Many divers also keep an analog pressure gauge as a backup.</li>
+    </ul>
+  </article>
+
+  <article class="card guide" id="formats">
+    <h2>Your dive data files</h2>
+    <p>Dive computers and apps save your dives in different file types. Knowing which one you have makes it easier to move your log where you want it.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Format</th><th>What it is</th><th>Where you'll see it</th></tr></thead>
+      <tbody>
+        <tr><td><b>UDDF</b></td><td style="white-space:normal">Universal Dive Data Format: an open format that many dive log programs can read and write.</td><td style="white-space:normal">Exports from Shearwater Cloud and other apps. The DiveFolk Logbook reads it.</td></tr>
+        <tr><td><b>DL7</b></td><td style="white-space:normal">The dive log format from DAN (Divers Alert Network). Files end in .zxu.</td><td style="white-space:normal">Some dive apps export and import it.</td></tr>
+        <tr><td><b>CSV</b></td><td style="white-space:normal">A plain spreadsheet file: rows and columns of text.</td><td style="white-space:normal">Opens in Excel, Google Sheets, Numbers and almost anything else.</td></tr>
+        <tr><td><b>FIT</b></td><td style="white-space:normal">Garmin's activity file format.</td><td style="white-space:normal">Garmin dive computers and watches.</td></tr>
+        <tr><td><b>Shearwater .db</b></td><td style="white-space:normal">The database file Shearwater Cloud keeps on your computer, holding all your dives.</td><td style="white-space:normal">Shearwater Cloud's File menu, under Export Database.</td></tr>
+      </tbody>
+    </table></div>
+  </article>
+
+  <article class="card guide" id="backup">
+    <h2>Back up your dive log</h2>
+    <p>A dive log is hard to rebuild if you lose it. A simple routine keeps it safe:</p>
+    <ul class="checks">
+      <li>After each trip, export your dives from your dive computer's app (UDDF and CSV are good choices).</li>
+      <li>Keep everything in one folder you own: your spreadsheet, the computer files and photos of your paper logbook pages.</li>
+      <li>Keep a second copy somewhere else, such as a cloud drive or an external drive.</li>
+      <li>An app that syncs to the cloud is convenient, but it's not the same as a copy you control.</li>
+    </ul>
+    <p><a href="index.html#spreadsheet">Get the free DiveFolk dive log spreadsheet</a></p>
+  </article>
+
+  <article class="card guide" id="next">
+    <h2>Coming next</h2>
+    <ul class="checks">
+      <li>Choosing your first dive computer</li>
+      <li>Nitrox and your dive computer</li>
+      <li>Keeping your computer's firmware up to date</li>
+      <li>Connecting your computer to your phone</li>
+      <li>Organizing underwater photos alongside your log</li>
+    </ul>
+  </article>
+</div></section>
+
+</main>
+<footer class="site-foot"><div class="wrap">
+  <nav aria-label="Footer"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html">DiveFolk Commons</a><a href="tech.html">Technology Explained</a><a href="ai.html">DiveFolk AI</a><a href="resources.html">Other Resources</a><a href="news.html">DiveFolk News</a><a href="trips.html">DiveFolk Trips</a><a href="about.html">About</a><a href="join.html">Join</a><a href="privacy.html">Privacy</a></nav>
+  <p>DiveFolk is free and independent. It is not affiliated with PADI, DAN, Shearwater or any dive computer maker; their names are used only to say what DiveFolk works with.</p>
+  <p>&copy; 2026 DiveFolk</p>
+</div></footer>
+
+</body>
+</html>

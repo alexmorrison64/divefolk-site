@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DiveFolk AI</title>
+<meta name="description" content="Ready-made AI prompts for divers. Fill in your details, copy, and paste into Claude, ChatGPT or another assistant.">
+<link rel="canonical" href="https://divefolk.com/ai.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DiveFolk">
+<meta property="og:title" content="DiveFolk AI">
+<meta property="og:description" content="Ready-made AI prompts for divers. Fill in your details, copy, and paste into Claude, ChatGPT or another assistant.">
+<meta property="og:url" content="https://divefolk.com/ai.html">
+<meta property="og:image" content="https://divefolk.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="index.html"><img src="img/turtle-icon.png" alt="" width="44" height="43"><span>DiveFolk</span></a>
+  <nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html" aria-current="page">Commons</a><a href="about.html">About</a><a class="join" href="join.html">Join free</a></nav>
+</div></header>
+<main>
+
+<div class="subbar"><div class="wrap"><nav class="subnav" aria-label="DiveFolk Commons sections"><a href="commons.html">Commons home</a><a href="tech.html">Technology Explained</a><a href="ai.html" aria-current="page">DiveFolk AI</a><a href="resources.html">Other Resources</a><a href="news.html">DiveFolk News</a><a href="trips.html">DiveFolk Trips</a></nav></div></div>
+<section class="page-head"><div class="wrap">
+  <div>
+    <p class="eyebrow">DiveFolk Commons &middot; DiveFolk AI</p>
+    <h1>A diver's guide to AI</h1>
+    <p class="lede">Most of us are already asking AI about diving. Here's how to get better answers, plus 20 fill-in-the-blank prompts for trips, gear, skills, health questions, your logbook and marine life.</p>
+    <p class="note-safety small">AI can be wrong. Never let it replace your training, your dive computer or your dive plan. For anything about health or safety, check with your instructor, your doctor or DAN.</p>
+  </div>
+  <img src="img/turtle-ai.png" alt="" width="556" height="318">
+</div></section>
+
+<section class="band" style="padding-top:0"><div class="wrap stack" style="gap:40px">
+  <section class="ptopic" id="tips">
+    <h2>Getting better answers</h2>
+    <div class="reslist">
+      <article class="card"><h3>Give it your context</h3><p>Say your certification, how many dives you have, where you dive and your gear. Answers get much more specific. Save it once with the "Your own dive assistant" setup below.</p></article>
+      <article class="card"><h3>Paste real data</h3><p>Paste your actual dive log rows, trip package details or gear list instead of describing them. Photos work too: logbook pages, creatures, gear labels.</p></article>
+      <article class="card"><h3>Ask it to show its work</h3><p>Ask for the math behind air use or weighting, and ask it to say when it's unsure. Wrong answers are easier to spot that way.</p></article>
+      <article class="card"><h3>Ask for sources, then check them</h3><p>For conditions, prices, rules and anything about safety, ask where the information comes from and confirm it with the source, your operator or your instructor.</p></article>
+      <article class="card"><h3>Keep private details private</h3><p>Leave out certification numbers, passport details and anything you wouldn't post publicly.</p></article>
+      <article class="card"><h3>Plan with it, don't dive by it</h3><p>AI is for planning and learning on land. In the water, your training, your dive computer and your dive plan are in charge.</p></article>
+    </div>
+  </section>
+  <h2>Prompts</h2>
+  <nav class="topics" aria-label="Prompt topics"><a href="#trips">Trip planning and travel</a><a href="#gear">Gear</a><a href="#skills">Skills and training</a><a href="#health">Health and comfort</a><a href="#logbook">Your logbook and dive data</a><a href="#life">Marine life and dive sites</a><a href="#skills">Skills and automations</a></nav>
+  <section class="ptopic" id="trips"><h2>Trip planning and travel</h2><article class="prompt-card" data-template="I&#x27;m a {{cert|Certification level|Advanced Open Water}} diver with about {{dives|Number of logged dives|40}} dives. I want to go diving in {{month|Month you can travel|June}} for about {{days|Trip length|7 days}}, flying from {{home|Home airport or city|Washington, DC}}, with a budget of about {{budget|Budget per person|$3,000}}. I enjoy {{likes|What you like to see or do|reefs, turtles, easy drift dives}} and I&#x27;d rather avoid {{avoid|Anything to avoid|very cold water and long boat rides}}.
+
+Suggest 3 to 5 destinations. For each, give typical water temperature and visibility that month, the skill level the diving suits, how to get there, a rough cost, and one reason it&#x27;s worth it. Ask me questions first if you need more information, and tell me which details I should double-check with a dive operator." id="p0"><h3>Find the right dive destination</h3></article><article class="prompt-card" data-template="I&#x27;m comparing these dive trip packages:
+
+{{packages|Paste the package details|Package A: ... Package B: ...}}
+
+Make a side-by-side table of price, number of dives, nitrox, room, meals, airport transfers and what is not included. Point out anything that looks unclear or easy to miss, then list the questions I should ask the operator before I book." id="p1"><h3>Compare dive trip packages</h3></article><article class="prompt-card" data-template="Make a packing list for a {{days|Trip length|6-day}} dive trip to {{place|Destination|Cozumel, Mexico}} in {{month|Month|March}}. I&#x27;m bringing {{mygear|Gear you&#x27;re bringing|my own BCD, regulator, computer, mask and fins}} and renting {{rent|What you&#x27;re renting|tanks and weights}}. Include a small save-a-dive kit with spares, documents to bring, and anything airlines often restrict. Organize it by carry-on and checked bag." id="p2"><h3>Packing list for a dive trip</h3></article><article class="prompt-card" data-template="I&#x27;m diving {{perday|Dives per day|2 dives a day}} from {{start|First dive day|March 3}} to {{end|Last dive day|March 8}}, and my flight home leaves {{flight|Flight date and time|March 9 at 11:00 AM}}. Using DAN&#x27;s published guidelines for flying after diving, help me plan when my last dive should be. Tell me which guideline you&#x27;re using and where it comes from. Remind me that my dive computer&#x27;s no-fly time and my dive operator&#x27;s rules come first." id="p3"><h3>Plan the last dive day before flying home</h3></article><article class="prompt-card" data-template="I&#x27;m thinking about diving with {{operator|Dive operator|a dive shop}} in {{place|Destination|Roatan}}. I&#x27;m a {{cert|Certification level|Open Water}} diver with {{dives|Number of logged dives|15}} dives, and I&#x27;ll be diving with {{buddy|Who you&#x27;ll dive with|my spouse, who is newer than me}}. Write a short, friendly email asking the questions I should ask before booking: group size, guide-to-diver ratio, typical depths and currents, gear rental condition, nitrox, safety equipment on the boat, and cancellation policy." id="p4"><h3>Questions for a dive operator</h3></article></section>
+<section class="ptopic" id="gear"><h2>Gear</h2><article class="prompt-card" data-template="I&#x27;m a {{cert|Certification level|newly certified Open Water}} diver. I expect to dive about {{freq|How often you&#x27;ll dive|8 to 12 times a year}}, mostly in {{where|Where you&#x27;ll dive|cold quarries in Virginia and warm water once a year}}. My budget for gear this year is {{budget|Gear budget|$1,500}}.
+
+What should I buy first, what should I keep renting for now, and why? Give price ranges, features that matter for my kind of diving, and mistakes new divers often make when buying gear. Remind me to try gear on at a dive shop before buying." id="p5"><h3>What gear should I buy first?</h3></article><article class="prompt-card" data-template="I&#x27;ll be diving in water around {{temp|Water temperature|55 to 65 °F}} for dives of about {{length|Dive length|45 minutes}}. I tend to run {{run|Do you run hot or cold?|hot}}. I&#x27;m {{height|Height|6 ft}} and {{weight|Weight|200 lb}}. What exposure protection would you suggest (thickness, hood, gloves, boots, or a drysuit), and what are the trade-offs? Tell me how to check fit when I try it on." id="p6"><h3>Which wetsuit or drysuit for these conditions?</h3></article><article class="prompt-card" data-template="I dive in {{water|Fresh or salt water|fresh water}} in a {{suit|Exposure suit|7mm wetsuit with hood}}, and I&#x27;m properly weighted with {{lead|Current lead|14 lb}} using {{oldtank|Current tank|an aluminum 80}}. I&#x27;m switching to {{newtank|New tank|a steel HP119}}.
+
+Explain how each tank&#x27;s buoyancy changes from full to empty, estimate how my weighting might change, and show your math. Tell me where you&#x27;re unsure, and list what to check during a weight check before my first dive with the new tank." id="p7"><h3>My weighting after switching tanks</h3></article><article class="prompt-card" data-template="Here is my dive gear and when each item was last serviced:
+
+{{gearlist|Your gear and last service dates|Regulator: serviced May 2025. Steel tank: last visual inspection June 2025, hydro test 2023. BCD: never serviced, bought 2025. Dive computer: battery changed 2026.}}
+
+Make a simple service schedule showing what&#x27;s due when, based on typical manufacturer and dive shop guidance. Flag anything that looks overdue, and remind me to confirm intervals with my gear&#x27;s manufacturer and my dive shop." id="p8"><h3>Build a gear service schedule</h3></article></section>
+<section class="ptopic" id="skills"><h2>Skills and training</h2><article class="prompt-card" data-template="Here are my recent dives:
+
+{{divedata|Each dive: average depth, minutes, start and end pressure|Dive 1: average 32 ft, 45 min, 3000 to 900 psi. Dive 2: average 45 ft, 38 min, 3100 to 800 psi.}}
+
+I used {{tank|Tank size and rated pressure|an aluminum 80 rated at 3000 psi}}. Calculate my surface air consumption (SAC) for each dive and on average, explain what it means in plain words, and suggest three things I can practice to use less air. Show your math." id="p9"><h3>Work out my air consumption</h3></article><article class="prompt-card" data-template="I&#x27;m certified as {{cert|Current certifications|Open Water and Advanced Open Water}} with {{dives|Number of logged dives|30}} dives. My goals are {{goals|Your diving goals|deeper wreck dives and diving more independently}}. Suggest a sensible order of courses, the usual prerequisites (minimum dives, age and certifications), and roughly how long each takes. Tell me to confirm the exact requirements with my training agency and instructor." id="p10"><h3>Plan my next certification</h3></article><article class="prompt-card" data-template="I struggle with {{issue|What gives you trouble|holding my safety stop and staying off the bottom}}. I dive {{where|Where you dive|in a quarry with a platform at 20 ft}} and I&#x27;ll have {{dives|Practice dives|4 dives}} to practice. Make a step-by-step practice plan with simple drills for each dive, what good looks like, and what to write in my log afterward." id="p11"><h3>A buoyancy practice plan</h3></article></section>
+<section class="ptopic" id="health"><h2>Health and comfort</h2><article class="prompt-card" data-template="I want to talk to {{who|Doctor or DAN|my doctor}} about {{topic|What you want to ask about|ear pain on descent that lasts after diving}}. Here is some background: {{background|Background, in your own words|it started on my last trip, and I dive about 10 times a year}}.
+
+Don&#x27;t diagnose me. Help me write a short, clear summary and a list of questions to ask, plus what details to have ready (when it happens, depth, symptoms). Remind me that DAN has a medical information line for divers." id="p12"><h3>Prepare questions for my doctor or DAN</h3></article><article class="prompt-card" data-template="I take {{meds|Medication or supplement|a daily allergy medicine}} and want to understand whether it could matter for diving. Don&#x27;t tell me whether it&#x27;s safe for me. Instead, explain in general terms what divers are told to consider about medications, and write questions for me to ask my doctor and DAN&#x27;s medical line." id="p13"><h3>Ask about medications and diving</h3></article><article class="prompt-card" data-template="I sometimes get seasick on dive boats, especially {{when|When it happens|on long rides and while gearing up}}. What general tips do divers use to feel better on boat days, and what questions should I ask my doctor or pharmacist about medicines? Don&#x27;t recommend specific medicines or doses." id="p14"><h3>Feeling better on boat dives</h3></article></section>
+<section class="ptopic" id="logbook"><h2>Your logbook and dive data</h2><article class="prompt-card" data-template="I&#x27;m attaching photos of my paper dive logbook. For each page, make one row with these columns in this order:
+Dive #, Date (YYYY-MM-DD), Time in, Time out, Bottom time (min), Max depth (ft), Dive site, Location, Country, Buddy, Water temp at depth (°F), Visibility (ft), Start pressure (psi), End pressure (psi), Weight (lb), Exposure suit, Notes.
+
+Put the rows in one table I can paste into a spreadsheet. My pressures are in {{units|Your pressure units|psi}}. If something is hard to read, leave the cell blank and list it under &quot;Please check&quot; with the dive number. Don&#x27;t guess." id="p15"><h3>Turn logbook photos into spreadsheet rows</h3></article><article class="prompt-card" data-template="Here is my dive log for {{year|Year|2026}}:
+
+{{log|Paste your dive log rows|(paste rows from your DiveFolk spreadsheet)}}
+
+Give me a friendly year in review: total dives and hours underwater, deepest and longest dives, favorite sites, how my air use changed, and three goals for next year based on what you see." id="p16"><h3>My dive year in review</h3></article><article class="prompt-card" data-template="Using these log notes from my trip to {{place|Destination|Dominica}}:
+
+{{notes|Paste your dive notes|...}}
+
+Write a short trip recap I can share with friends, about {{length|Length|300 words}}, in a {{tone|Tone|warm, casual}} voice. Include the highlights, what surprised me, and tips for other divers. Don&#x27;t add details that aren&#x27;t in my notes." id="p17"><h3>Write up a dive trip</h3></article></section>
+<section class="ptopic" id="life"><h2>Marine life and dive sites</h2><article class="prompt-card" data-template="I&#x27;m attaching a photo I took on a dive at {{place|Where|Bonaire}}, at about {{depth|Depth|40 ft}}. What is it most likely to be? Give your best guess and other possibilities, how confident you are, a few interesting facts, and whether there&#x27;s anything divers should know (for example, don&#x27;t touch). If you can&#x27;t tell from the photo, say so." id="p18"><h3>What is this creature?</h3></article><article class="prompt-card" data-template="I&#x27;m diving {{site|Dive site|Champagne Reef}} in {{place|Area|Dominica}} in {{month|Month|December}}. What kinds of marine life and conditions are divers likely to find there that time of year? Suggest what to look for, and tell me which details to confirm with the local dive operator." id="p19"><h3>What will I see at this site?</h3></article></section>
+  <section class="ptopic" id="skills">
+    <h2>Skills and automations</h2>
+    <p>Go a step further: save your details once, and let your assistant handle repeat jobs.</p>
+    <article class="card"><h3>Your own dive assistant</h3><p>Save your diver profile once so you don&#x27;t retype it. In Claude, create a Project; in ChatGPT, a Project or a custom GPT; other assistants have similar features. Paste this into its instructions:</p><div class="prompt-card" style="border:0;padding:0" data-template="About me as a diver: I&#x27;m certified {{cert|Certification level|Advanced Open Water}} with about {{dives|Number of logged dives|40}} dives. I usually dive in {{where|Where you usually dive|Virginia quarries, plus one warm-water trip a year}}. My gear: {{gear|Your gear|own BCD, regulator, computer and 7mm wetsuit; I rent tanks}}. I prefer {{prefs|Your preferences|shore dives, small groups and plain explanations}}.
+
+When I ask diving questions, use this background. Show math when you calculate. Say when you&#x27;re unsure. For anything about health or safety, remind me to check with my instructor, doctor or DAN." id="s0"></div></article>
+<article class="card"><h3>A logbook photo helper</h3><p>Turn the logbook photo prompt into a reusable helper, such as a Claude skill or a custom GPT, so you can drop in photos any time and get rows that match your DiveFolk spreadsheet.</p></article>
+<article class="card"><h3>Gear service reminders</h3><p>Ask an assistant that connects to your calendar (or set them yourself) to add yearly reminders for regulator service and tank inspections, using the dates your dive shop recommends.</p></article>
+<article class="card"><h3>Trip countdown</h3><p>Before each trip, have your assistant set reminders for 4 weeks out (book, check certification cards and insurance), 1 week out (service and pack gear) and the day before (charge your computer, print documents).</p></article>
+  </section>
+</div></section>
+
+</main>
+<footer class="site-foot"><div class="wrap">
+  <nav aria-label="Footer"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html">DiveFolk Commons</a><a href="tech.html">Technology Explained</a><a href="ai.html">DiveFolk AI</a><a href="resources.html">Other Resources</a><a href="news.html">DiveFolk News</a><a href="trips.html">DiveFolk Trips</a><a href="about.html">About</a><a href="join.html">Join</a><a href="privacy.html">Privacy</a></nav>
+  <p>DiveFolk is free and independent. It is not affiliated with PADI, DAN, Shearwater or any dive computer maker; their names are used only to say what DiveFolk works with.</p>
+  <p>&copy; 2026 DiveFolk</p>
+</div></footer>
+<script>
+(function () {
+  const RX = /\{\{(\w+)\|([^|}]+)\|([^}]*)\}\}/g;
+  const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  document.querySelectorAll('.prompt-card[data-template]').forEach(card => {
+    const tpl = card.dataset.template, fields = {};
+    let m; RX.lastIndex = 0;
+    while ((m = RX.exec(tpl))) if (!fields[m[1]]) fields[m[1]] = { label: m[2], example: m[3] };
+    const keys = Object.keys(fields), id = card.id;
+    const inputs = keys.map(k => {
+      const f = fields[k], long = f.example.length > 60, fid = id + '-' + k;
+      return `<label for="${fid}">${esc(f.label)}${long
+        ? `<textarea id="${fid}" data-k="${k}" placeholder="${esc(f.example)}"></textarea>`
+        : `<input id="${fid}" data-k="${k}" placeholder="${esc(f.example)}">`}</label>`;
+    }).join('');
+    card.insertAdjacentHTML('beforeend',
+      (keys.length ? `<details ${card.id === 'p0' || card.id.startsWith('s') ? 'open' : ''}><summary>Fill in your details (${keys.length})</summary><div class="fields">${inputs}</div></details>` : '') +
+      `<p class="ptext" aria-live="polite"></p>
+       <div class="actions"><button class="btn ghost" type="button">Copy prompt</button></div>`);
+    const out = card.querySelector('.ptext'), btn = card.querySelector('button');
+    const vals = () => { const v = {}; card.querySelectorAll('[data-k]').forEach(i => v[i.dataset.k] = i.value.trim()); return v; };
+    const render = () => { const v = vals();
+      out.innerHTML = esc(tpl).replace(/\{\{(\w+)\|([^|}]+)\|([^}]*)\}\}/g, (_, k, l) => v[k] ? `<span class="filled">${esc(v[k])}</span>` : `<span class="ph">[${l}]</span>`); };
+    const plain = () => { const v = vals(); return tpl.replace(RX, (_, k, l) => v[k] || `[${l}]`); };
+    card.addEventListener('input', render); render();
+    btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(plain()); btn.textContent = 'Copied'; }
+      catch (e) { const r = document.createRange(); r.selectNodeContents(out); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected: press Cmd+C or Ctrl+C'; }
+      setTimeout(() => { btn.textContent = 'Copy prompt'; }, 2500);
+    });
+  });
+})();
+</script>
+</body>
+</html>
