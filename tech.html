@@ -85,7 +85,7 @@
         <tr><td><b>UDDF</b></td><td style="white-space:normal">Universal Dive Data Format: an open format that many dive log programs can read and write.</td><td style="white-space:normal">Exports from Shearwater Cloud and other apps. The DiveFolk Logbook reads it.</td></tr>
         <tr><td><b>DL7</b></td><td style="white-space:normal">The dive log format from DAN (Divers Alert Network). Files end in .zxu.</td><td style="white-space:normal">Some dive apps export and import it.</td></tr>
         <tr><td><b>CSV</b></td><td style="white-space:normal">A plain spreadsheet file: rows and columns of text.</td><td style="white-space:normal">Opens in Excel, Google Sheets, Numbers and almost anything else.</td></tr>
-        <tr><td><b>FIT</b></td><td style="white-space:normal">Garmin's activity file format.</td><td style="white-space:normal">Garmin dive computers and watches.</td></tr>
+        <tr><td><b>FIT</b></td><td style="white-space:normal">Garmin's activity file format.</td><td style="white-space:normal">Garmin dive computers and watches. The DiveFolk Logbook reads it.</td></tr>
         <tr><td><b>Shearwater .db</b></td><td style="white-space:normal">The database file Shearwater Cloud keeps on your computer, holding all your dives.</td><td style="white-space:normal">Shearwater Cloud's File menu, under Export Database.</td></tr>
       </tbody>
     </table></div>
@@ -115,6 +115,21 @@
   </article>
 </div></section>
 
+<section class="updates" aria-labelledby="upd-h"><div class="wrap">
+  <form id="updatesform" class="updates-form" novalidate>
+    <div class="stack" style="gap:4px">
+      <h2 id="upd-h">Get DiveFolk updates</h2>
+      <p>An email when we add a new tool or guide. About once a month, never more than that. Unsubscribe any time.</p>
+    </div>
+    <div class="updates-fields">
+      <label><span class="visually-hidden">First name</span><input name="uname" placeholder="First name" autocomplete="given-name" required></label>
+      <label><span class="visually-hidden">Email</span><input name="uemail" type="email" placeholder="Email" autocomplete="email" required></label>
+      <button class="btn" type="submit">Notify me</button>
+    </div>
+    <p class="small muted">For people 13 and older. We never sell your information. <a href="privacy.html">Privacy</a></p>
+    <p class="formmsg" role="status" hidden></p>
+  </form>
+</div></section>
 </main>
 <footer class="site-foot"><div class="wrap">
   <nav aria-label="Footer"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html">DiveFolk Commons</a><a href="tech.html">Technology Explained</a><a href="ai.html">DiveFolk AI</a><a href="resources.html">Other Resources</a><a href="news.html">DiveFolk News</a><a href="trips.html">DiveFolk Trips</a><a href="about.html">About</a><a href="join.html">Join</a><a href="privacy.html">Privacy</a></nav>
@@ -122,5 +137,6 @@
   <p>&copy; 2026 DiveFolk</p>
 </div></footer>
 
+<script src="updates.js" defer></script>
 </body>
 </html>

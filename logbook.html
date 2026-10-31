@@ -32,7 +32,7 @@
   <div>
     <p class="eyebrow">DiveFolk Logbook <span class="chip beta" style="margin-left:8px">Beta</span></p>
     <h1>Clean up your dive log</h1>
-    <p class="lede">Add the files from your dive computer, check how DiveFolk grouped them, then download your log. Nothing is uploaded; it all happens in this browser window.</p>
+    <p class="lede">Add the files from your dive computer, check how DiveFolk grouped them, then download your log. Works with Shearwater, Garmin and other computers that export UDDF. Nothing is uploaded; it all happens in this browser window.</p>
   </div>
   <img src="img/turtle-swim.png" alt="" width="544" height="404">
 </div></section>
@@ -41,14 +41,28 @@
   <div class="card" id="add">
     <h2>1. Add your dives</h2>
     <label class="drop" id="drop">
-      <input type="file" id="file" accept=".uddf,.xml" multiple class="visually-hidden">
-      <strong>Drop your UDDF files here</strong>
-      <span>or click to choose them from your computer</span>
+      <input type="file" id="file" accept=".uddf,.xml,.fit,.gz,.zip" multiple class="visually-hidden">
+      <strong>Drop your dive files here</strong>
+      <span>or click to choose them. Garmin .zip and .fit files, or UDDF files.</span>
     </label>
     <div class="actions" style="align-items:center">
       <button class="btn ghost" id="sample" type="button">Try it with example dives</button>
-      <p class="small muted" id="loadmsg">In Shearwater Cloud: select your dives, then File, Export, As UDDF.</p>
+      <p class="small muted" id="loadmsg" aria-live="polite">Not sure where your files are? See the steps below.</p>
     </div>
+    <details class="howto">
+      <summary><strong>How to get your dive files</strong></summary>
+      <div class="stack" style="gap:14px;margin-top:12px">
+        <div><h3>Shearwater</h3>
+        <p>In Shearwater Cloud on a computer, select your dives, then choose File, Export, As UDDF. Drop the files here.</p></div>
+        <div><h3>Garmin, one dive at a time</h3>
+        <p>Sign in at connect.garmin.com on a computer (the phone app can't export). Open Activities, open a dive, click the gear icon at the top right, then choose <b>Export Original</b>. Drop the .zip you get here, as it is. You can drop several at once.</p></div>
+        <div><h3>Garmin, every dive at once</h3>
+        <p>In Garmin Connect, go to your account settings and find <b>Export Your Data</b> (it may be under Data Management or Privacy). Garmin emails you a download link, usually within a couple of days. Drop that whole .zip here. DiveFolk finds the dives and skips your runs, walks and other activities.</p>
+        <p class="small muted">If the file is very large (over about 4 GB) and won't open, unzip it and drop the files named UploadedFiles...zip instead.</p></div>
+        <div><h3>Other computers</h3>
+        <p>Many dive apps and Subsurface can export UDDF. Look for Export, then UDDF. More computers are coming; <a href="mailto:hello@divefolk.com">tell us which one you use</a>.</p></div>
+      </div>
+    </details>
   </div>
 
   <div class="card" id="review" hidden>
@@ -80,10 +94,25 @@
       <button class="btn" id="csv" type="button">Download spreadsheet (CSV)</button>
       <button class="btn ghost" id="dl7" type="button">Download DL7 file (.zxu)</button>
     </div>
-    <p class="small muted">The CSV opens in any spreadsheet. DL7 is the dive log format from DAN (Divers Alert Network); some dive log programs can import it. Each dive includes depth, water temperature and tank pressure readings.</p>
+    <p class="small muted">The CSV opens in any spreadsheet. DL7 is the dive log format from DAN (Divers Alert Network); some dive log programs can import it. Each dive includes depth and water temperature readings, plus tank pressure when your computer records it.</p>
   </div>
 </div></section>
 
+<section class="updates" aria-labelledby="upd-h"><div class="wrap">
+  <form id="updatesform" class="updates-form" novalidate>
+    <div class="stack" style="gap:4px">
+      <h2 id="upd-h">Get DiveFolk updates</h2>
+      <p>An email when we add a new tool or guide. About once a month, never more than that. Unsubscribe any time.</p>
+    </div>
+    <div class="updates-fields">
+      <label><span class="visually-hidden">First name</span><input name="uname" placeholder="First name" autocomplete="given-name" required></label>
+      <label><span class="visually-hidden">Email</span><input name="uemail" type="email" placeholder="Email" autocomplete="email" required></label>
+      <button class="btn" type="submit">Notify me</button>
+    </div>
+    <p class="small muted">For people 13 and older. We never sell your information. <a href="privacy.html">Privacy</a></p>
+    <p class="formmsg" role="status" hidden></p>
+  </form>
+</div></section>
 </main>
 <footer class="site-foot"><div class="wrap">
   <nav aria-label="Footer"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html">DiveFolk Commons</a><a href="tech.html">Technology Explained</a><a href="ai.html">DiveFolk AI</a><a href="resources.html">Other Resources</a><a href="news.html">DiveFolk News</a><a href="trips.html">DiveFolk Trips</a><a href="about.html">About</a><a href="join.html">Join</a><a href="privacy.html">Privacy</a></nav>
@@ -103,19 +132,36 @@
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const hr12 = (h, m) => `${(h % 12) || 12}:${p2(m)} ${h < 12 ? 'AM' : 'PM'}`;
 
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const plural = (n, w, pl) => `${n.toLocaleString()} ${n === 1 ? w : (pl || w + 's')}`;
+
   async function load(files, label) {
-    let raw = [], bad = [];
-    for (const f of files) {
-      try { raw = raw.concat(C.parseUDDF(await f.text(), DOMParser, f.name)); }
-      catch (e) { bad.push(f.name); }
+    $('loadmsg').textContent = 'Reading your files...';
+    let r;
+    try {
+      r = await C.readDiveFiles(files, { DOMParser,
+        onProgress: (done, total) => { $('loadmsg').textContent = `Reading file ${done.toLocaleString()} of about ${total.toLocaleString()}...`; } });
+    } catch (e) {
+      $('loadmsg').innerHTML = '<span class="warn">Those files could not be read. This browser may be too old; try the latest Chrome, Safari, Edge or Firefox.</span>';
+      return;
     }
-    dives = C.normalize(dives.concat(raw));
+    const before = dives.length;
+    dives = C.normalize(dives.concat(r.dives));
     join = C.suggestSplits(dives);
     include = dives.map(() => true);
     dropPiece = dives.map(() => false);
     shift = {};
-    $('loadmsg').innerHTML = `${label || 'Loaded'} ${dives.length} dive piece${dives.length === 1 ? '' : 's'}.` +
-      (bad.length ? ` <span class="warn">Could not read: ${bad.join(', ')}. Check that it is a UDDF file.</span>` : '');
+    const added = dives.length - before;
+    const notes = [];
+    if (r.other) notes.push(`skipped ${plural(r.other, 'activity', 'activities')} that ${r.other === 1 ? "wasn't a dive" : "weren't dives"}`);
+    if (r.apnea) notes.push(`skipped ${plural(r.apnea, 'freediving session')} (not supported yet)`);
+    const msg = label ? `${label} ${plural(dives.length, 'dive piece')}.`
+      : `Added ${plural(added, 'dive piece')}${notes.length ? '; ' + notes.join(', ') : ''}.`;
+    $('loadmsg').innerHTML = esc(msg) +
+      (r.dives.some(d => d.timeIsUTC) ? ' <span class="warn">Some Garmin dives had no local time saved, so they show in UTC. Use Clock fix if a time looks wrong.</span>' : '') +
+      (r.bad.length ? ` <span class="warn">Could not read: ${esc(r.bad.slice(0, 5).join(', '))}${r.bad.length > 5 ? ' and others' : ''}.</span>` : '') +
+      (r.zip64.length ? ' <span class="warn">That zip is too large to open here. Unzip it and drop the UploadedFiles zips inside instead.</span>' : '') +
+      (!added && !r.bad.length && !label ? ' <span class="warn">No dives found in those files.</span>' : '');
     render();
   }
 
@@ -185,7 +231,7 @@
     try {
       const text = await (await fetch('sample.uddf')).text();
       dives = [];
-      await load([{ name: 'example dives', text: async () => text }], 'Loaded example dives:');
+      await load([new File([text], 'example-dives.uddf')], 'Loaded example dives:');
     } catch (e) { $('loadmsg').textContent = 'The example dives could not be loaded.'; }
   });
   const drop = $('drop');
@@ -197,5 +243,6 @@
   $('csv').addEventListener('click', () => save(C.toCSV(logged()), `divefolk-logbook-${day()}.csv`, 'text/csv'));
 })();
 </script>
+<script src="updates.js" defer></script>
 </body>
 </html>

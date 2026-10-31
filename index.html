@@ -68,10 +68,10 @@
     <p>Bring your dives together from wherever they are, fix what your dive computer got wrong, and keep one clean log you own. It runs in your browser, so your files never leave your computer.</p>
   </div>
   <ul class="sources">
-    <li><span><span class="chip live">Works now</span></span><b>Dive computer files</b><span>UDDF exports from Shearwater Cloud and other dive computer apps.</span></li>
+    <li><span><span class="chip live">Works now</span></span><b>Shearwater and Garmin</b><span>UDDF files from Shearwater Cloud and other dive apps, and Garmin files straight from Garmin Connect, one dive or your whole history.</span></li>
     <li><span><span class="chip live">Works now</span></span><b>Photos of your paper logbook</b><span>Use our <a href="ai.html#logbook">logbook photo prompt</a> with an AI assistant to turn pages into spreadsheet rows. A built-in version is planned.</span></li>
     <li><span><span class="chip soon">Coming soon</span></span><b>Your spreadsheet</b><span>The DiveFolk dive log spreadsheet, or a CSV from another app.</span></li>
-    <li><span><span class="chip soon">Planned</span></span><b>Other apps and computers</b><span>Garmin, Subsurface and DL7 files.</span></li>
+    <li><span><span class="chip soon">Planned</span></span><b>Other apps and computers</b><span>Suunto, Subsurface and DL7 files.</span></li>
   </ul>
   <ol class="steps">
     <li><h3>Bring in your dives</h3><p>Add your files. Everything stays in your browser; nothing is uploaded.</p></li>
@@ -125,6 +125,21 @@
   </div>
 </div></section>
 
+<section class="updates" aria-labelledby="upd-h"><div class="wrap">
+  <form id="updatesform" class="updates-form" novalidate>
+    <div class="stack" style="gap:4px">
+      <h2 id="upd-h">Get DiveFolk updates</h2>
+      <p>An email when we add a new tool or guide. About once a month, never more than that. Unsubscribe any time.</p>
+    </div>
+    <div class="updates-fields">
+      <label><span class="visually-hidden">First name</span><input name="uname" placeholder="First name" autocomplete="given-name" required></label>
+      <label><span class="visually-hidden">Email</span><input name="uemail" type="email" placeholder="Email" autocomplete="email" required></label>
+      <button class="btn" type="submit">Notify me</button>
+    </div>
+    <p class="small muted">For people 13 and older. We never sell your information. <a href="privacy.html">Privacy</a></p>
+    <p class="formmsg" role="status" hidden></p>
+  </form>
+</div></section>
 </main>
 <footer class="site-foot"><div class="wrap">
   <nav aria-label="Footer"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html">DiveFolk Commons</a><a href="tech.html">Technology Explained</a><a href="ai.html">DiveFolk AI</a><a href="resources.html">Other Resources</a><a href="news.html">DiveFolk News</a><a href="trips.html">DiveFolk Trips</a><a href="about.html">About</a><a href="join.html">Join</a><a href="privacy.html">Privacy</a></nav>
@@ -132,5 +147,6 @@
   <p>&copy; 2026 DiveFolk</p>
 </div></footer>
 
+<script src="updates.js" defer></script>
 </body>
 </html>

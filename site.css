@@ -221,7 +221,7 @@ input[type=number] { width: 90px; }
 .prompt-card details > summary { cursor: pointer; font-weight: 700; color: var(--ocean); }
 .fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
 .fields label { display: grid; gap: 4px; font-size: 0.95rem; font-weight: 700; min-width: 0; }
-.fields input, .fields textarea, .form input, .form select, .form textarea {
+.fields input, .fields textarea, .form input, .form select, .form textarea, .updates-fields input {
   font: inherit; font-size: 1rem; font-weight: 400; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px;
   background: var(--paper); color: var(--ink); width: 100%; min-width: 0;
 }
@@ -264,3 +264,20 @@ input[type=number] { width: 90px; }
 .news-item:last-child { border-bottom: 0; }
 .news-item .meta { font: 500 0.85rem/1.2 var(--mono); color: var(--ink-soft); }
 @media (max-width: 860px) { .hubgrid, .reslist { grid-template-columns: 1fr; } }
+
+/* Logbook: how to get your files */
+.howto { margin-top: 18px; border-top: 1px solid var(--line); padding-top: 14px; }
+.howto summary { cursor: pointer; }
+.howto h3 { font-size: 1.05rem; margin: 0 0 4px; }
+.howto p { margin: 0; }
+
+/* Get updates strip */
+.updates { background: var(--paper); border-top: 1px solid var(--line); }
+.updates .wrap { padding-block: 32px; }
+.updates-form { display: grid; gap: 14px; }
+.updates-form h2 { font-size: var(--step-1, 1.35rem); margin: 0; }
+.updates-form p { margin: 0; }
+.updates-fields { display: flex; flex-wrap: wrap; gap: 10px; }
+.updates-fields label { flex: 1 1 200px; min-width: 0; }
+.updates-fields input { width: 100%; background: var(--surface); }
+.updates-fields .btn { flex: 0 0 auto; }
