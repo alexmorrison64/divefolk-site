@@ -422,7 +422,177 @@
     return [head, ...rows].map(row => row.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n') + '\n';
   }
 
-  const api = { parseUDDF, parseFIT, readFIT, zipEntries, readDiveFiles, normalize, suggestSplits, mergeDives, toDL7, toCSV };
+  /* ---------- Paper logbook rows (from the DiveFolk AI photo prompt) ---------- */
+  // The DiveFolk spreadsheet's core columns, in order.
+  const PAPER_COLS = ['Dive #', 'Date', 'Time in', 'Time out', 'Bottom time (min)', 'Max depth (ft)',
+    'Dive site', 'Location', 'Country', 'Buddy', 'Water temp at depth (°F)', 'Visibility (ft)',
+    'Start pressure (psi)', 'End pressure (psi)', 'Weight (lb)', 'Exposure suit', 'Notes'];
+  const PAPER_KEYS = ['num', 'date', 'timeIn', 'timeOut', 'minutes', 'depthFt', 'site', 'location',
+    'country', 'buddy', 'tempF', 'visFt', 'startPsi', 'endPsi', 'weightLb', 'suit', 'notes'];
+  function headerKey(h) {
+    const x = h.toLowerCase().replace(/[^a-z#°]+/g, ' ').trim();
+    if (/^(dive )?(#|no|num|number)\b|^dive #/.test(x) || x === 'dive' || x === '#') return 'num';
+    if (/\bdate\b/.test(x)) return 'date';
+    if (/time in|start time|entry time|^start$|^in$/.test(x)) return 'timeIn';
+    if (/time out|end time|exit time|^out$/.test(x)) return 'timeOut';
+    if (/bottom time|minutes|duration|dive time/.test(x)) return 'minutes';
+    if (/depth/.test(x)) return 'depthFt';
+    if (/site/.test(x)) return 'site';
+    if (/location|town|region/.test(x)) return 'location';
+    if (/country/.test(x)) return 'country';
+    if (/buddy|partner/.test(x)) return 'buddy';
+    if (/temp/.test(x)) return 'tempF';
+    if (/vis/.test(x)) return 'visFt';
+    if (/start (pressure|psi|bar)|pressure in|air in|psi in|start psi/.test(x)) return 'startPsi';
+    if (/end (pressure|psi|bar)|pressure out|air out|psi out|end psi/.test(x)) return 'endPsi';
+    if (/weight|lead/.test(x)) return 'weightLb';
+    if (/suit|exposure|wetsuit/.test(x)) return 'suit';
+    if (/note|comment/.test(x)) return 'notes';
+    return null;
+  }
+  function splitCSVLine(line, delim) {
+    const out = []; let cur = '', q = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (q) { if (ch === '"') { if (line[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; }
+      else if (ch === '"') q = true;
+      else if (ch === delim) { out.push(cur); cur = ''; }
+      else cur += ch;
+    }
+    out.push(cur);
+    return out.map(v => v.trim());
+  }
+  const MONTH = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, sept: 9, oct: 10, nov: 11, dec: 12 };
+  function parseDateText(v) {
+    v = (v || '').trim();
+    let m;
+    if ((m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(v))) return { y: +m[1], mo: +m[2], d: +m[3] };
+    if ((m = /^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{2,4})/.exec(v))) { let y = +m[3]; if (y < 100) y += 2000; return { y, mo: +m[1], d: +m[2] }; }
+    if ((m = /^([A-Za-z]{3,9})\.?\s+(\d{1,2}),?\s+(\d{4})/.exec(v)) && MONTH[m[1].slice(0, 3).toLowerCase()])
+      return { y: +m[3], mo: MONTH[m[1].slice(0, 3).toLowerCase()], d: +m[2] };
+    if ((m = /^(\d{1,2})\s+([A-Za-z]{3,9})\.?,?\s+(\d{4})/.exec(v)) && MONTH[m[2].slice(0, 3).toLowerCase()])
+      return { y: +m[3], mo: MONTH[m[2].slice(0, 3).toLowerCase()], d: +m[1] };
+    return null;
+  }
+  function parseTimeText(v) {
+    v = (v || '').trim().toLowerCase();
+    const m = /^(\d{1,2})(?::?(\d{2}))?\s*(am|pm|a|p)?/.exec(v);
+    if (!m || (!m[2] && !m[3])) return null;
+    let h = +m[1]; const mi = +(m[2] || 0);
+    if (m[3] && m[3][0] === 'p' && h < 12) h += 12;
+    if (m[3] && m[3][0] === 'a' && h === 12) h = 0;
+    return h < 24 && mi < 60 ? h * 60 + mi : null;
+  }
+  const numText = v => { const m = /-?\d+(?:[.,]\d+)?/.exec(String(v || '').replace(/,(?=\d{3}\b)/g, '')); return m ? parseFloat(m[0].replace(',', '.')) : null; };
+
+  /* Read pasted or saved paper-log rows: CSV, tab-separated (copied from a chat or
+     spreadsheet) or a Markdown table. Returns { rows, unknownHeaders }. */
+  function parsePaperLog(text) {
+    let lines = String(text || '').replace(/\r/g, '').split('\n').map(l => l.trim()).filter(Boolean);
+    lines = lines.filter(l => !/^```/.test(l) && !/^\|?\s*:?-{3,}/.test(l));
+    if (!lines.length) return { rows: [], unknownHeaders: [] };
+    const md = lines[0].startsWith('|');
+    const delim = md ? '|' : (lines[0].includes('\t') ? '\t' : (lines[0].split(';').length > lines[0].split(',').length ? ';' : ','));
+    const split = l => { let c = splitCSVLine(l, delim); if (md) c = c.slice(1, c[c.length - 1] === '' ? -1 : undefined); return c; };
+    const head = split(lines[0]);
+    const keys = head.map(headerKey);
+    const unknownHeaders = head.filter((h, i) => h && !keys[i]);
+    const rows = lines.slice(1).map(l => {
+      const c = split(l), r = {};
+      keys.forEach((k, i) => { if (k && c[i] != null && c[i] !== '' && r[k] == null) r[k] = c[i]; });
+      r.dateObj = parseDateText(r.date);
+      r.timeInMin = parseTimeText(r.timeIn);
+      r.depthNum = numText(r.depthFt);
+      r.minutesNum = numText(r.minutes);
+      return r;
+    }).filter(r => Object.keys(r).some(k => !/Obj|Num|Min$/.test(k) && r[k]));
+    return { rows, unknownHeaders };
+  }
+
+  /* Match paper rows to logged computer dives (after joins and clock fixes).
+     Returns pairs: { dive, paper, flags[] } covering every dive and every paper row. */
+  function matchPaper(logged, paperRows, opts) {
+    const o = Object.assign({ maxClockMin: 150 }, opts || {});
+    const dayKey = t => `${t.y}-${t.mo}-${t.d}`;
+    const used = new Set(), pairs = [];
+    const byDay = {};
+    logged.forEach((d, i) => { (byDay[dayKey(d.start)] = byDay[dayKey(d.start)] || []).push(i); });
+    const taken = new Set();
+    // pass 1: same day, closest start time (allowing for a wrong time zone)
+    const cand = [];
+    paperRows.forEach((p, pi) => {
+      if (!p.dateObj) return;
+      (byDay[dayKey(p.dateObj)] || []).forEach(di => {
+        const d = logged[di];
+        const dMin = d.start.h * 60 + d.start.mi;
+        let score = 0, dt = null;
+        if (p.timeInMin != null) { dt = Math.abs(dMin - p.timeInMin); if (dt > o.maxClockMin) return; score += dt; }
+        if (p.depthNum != null) score += Math.abs(d.maxDepth * 3.28084 - p.depthNum) * 2;
+        if (p.minutesNum != null) score += Math.abs(d.duration / 60 - p.minutesNum);
+        cand.push({ pi, di, score, dt });
+      });
+    });
+    cand.sort((a, b) => a.score - b.score);
+    const link = {};
+    cand.forEach(c => { if (!used.has(c.pi) && !taken.has(c.di)) { used.add(c.pi); taken.add(c.di); link[c.di] = c; } });
+    // pass 2: same day, no times on paper: pair in order
+    paperRows.forEach((p, pi) => {
+      if (used.has(pi) || !p.dateObj) return;
+      const free = (byDay[dayKey(p.dateObj)] || []).filter(di => !taken.has(di));
+      if (free.length) { used.add(pi); taken.add(free[0]); link[free[0]] = { pi, di: free[0], dt: null }; }
+    });
+    logged.forEach((d, di) => {
+      const l = link[di], flags = [];
+      if (!l) { pairs.push({ dive: d, paper: null, flags: ['Computer dive with no paper entry'] }); return; }
+      const p = paperRows[l.pi];
+      if (l.dt != null && l.dt >= 45) {
+        const hrs = Math.round(((p.timeInMin) - (d.start.h * 60 + d.start.mi)) / 60);
+        flags.push(hrs ? `Paper time is ${Math.abs(hrs)} h ${hrs > 0 ? 'later' : 'earlier'}; try Clock fix ${hrs > 0 ? '+' : ''}${hrs} h` : 'Start times differ');
+      }
+      if (p.depthNum != null) {
+        const ft = d.maxDepth * 3.28084;
+        if (Math.abs(ft - p.depthNum) > Math.max(8, 0.15 * ft)) flags.push(`Depth: computer ${Math.round(ft)} ft, paper ${Math.round(p.depthNum)} ft`);
+      }
+      if (p.minutesNum != null && Math.abs(d.duration / 60 - p.minutesNum) > Math.max(8, 0.25 * p.minutesNum))
+        flags.push(`Time: computer ${Math.round(d.duration / 60)} min, paper ${Math.round(p.minutesNum)} min`);
+      pairs.push({ dive: d, paper: p, flags });
+    });
+    paperRows.forEach((p, pi) => {
+      if (!used.has(pi)) pairs.push({ dive: null, paper: p, flags: [p.dateObj ? 'Paper entry with no computer dive' : 'Paper entry has no readable date'] });
+    });
+    const sortKey = x => x.dive ? x.dive.start.epoch : (x.paper.dateObj ? Date.UTC(x.paper.dateObj.y, x.paper.dateObj.mo - 1, x.paper.dateObj.d) / 1000 + (x.paper.timeInMin || 0) * 60 : Infinity);
+    return pairs.sort((a, b) => sortKey(a) - sortKey(b));
+  }
+
+  /* One merged log in the DiveFolk spreadsheet's column order. Computer data wins for
+     depth, time, temperature and pressure; paper wins for everything people write down. */
+  function toMergedCSV(pairs) {
+    const fmtTime = mins => mins == null ? '' : `${p2(Math.floor(mins / 60))}:${p2(mins % 60)}`;
+    const head = PAPER_COLS.concat(['Source', 'Please check']);
+    const rows = pairs.map(({ dive: d, paper: p, flags }) => {
+      p = p || {};
+      const date = d ? `${d.start.y}-${p2(d.start.mo)}-${p2(d.start.d)}` : (p.dateObj ? `${p.dateObj.y}-${p2(p.dateObj.mo)}-${p2(p.dateObj.d)}` : (p.date || ''));
+      return [
+        p.num || (d && d.logNumber) || '',
+        date,
+        d ? fmtTime(d.start.h * 60 + d.start.mi) : (p.timeIn || ''),
+        d ? fmtTime(d.endTime.h * 60 + d.endTime.mi) : (p.timeOut || ''),
+        d ? Math.round(d.duration / 60) : (p.minutes || ''),
+        d ? Math.round(d.maxDepth * 3.28084) : (p.depthFt || ''),
+        p.site || '', p.location || '', p.country || '', p.buddy || '',
+        d && d.minTempK != null ? Math.round((d.minTempK - 273.15) * 9 / 5 + 32) : (p.tempF || ''),
+        p.visFt || '',
+        d && d.tankBeginBar != null ? Math.round(d.tankBeginBar * 14.5038) : (p.startPsi || ''),
+        d && d.tankEndBar != null ? Math.round(d.tankEndBar * 14.5038) : (p.endPsi || ''),
+        p.weightLb || '', p.suit || '', p.notes || '',
+        d && p.dateObj ? 'Computer + paper' : (d ? 'Computer only' : 'Paper only'),
+        flags.join('; ')
+      ];
+    });
+    return [head, ...rows].map(row => row.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n') + '\n';
+  }
+
+  const api = { parsePaperLog, matchPaper, toMergedCSV, PAPER_COLS, parseUDDF, parseFIT, readFIT, zipEntries, readDiveFiles, normalize, suggestSplits, mergeDives, toDL7, toCSV };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.DivefolkCore = api;
 })(typeof window !== 'undefined' ? window : globalThis);

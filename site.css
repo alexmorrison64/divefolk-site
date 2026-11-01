@@ -281,3 +281,30 @@ input[type=number] { width: 90px; }
 .updates-fields label { flex: 1 1 200px; min-width: 0; }
 .updates-fields input { width: 100%; background: var(--surface); }
 .updates-fields .btn { flex: 0 0 auto; }
+
+/* Trip reports */
+.trip { gap: 16px; }
+.trip h3 { margin: 8px 0 0; }
+.trip-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; margin: 4px 0; }
+.trip-facts div { min-width: 0; }
+.trip-facts dt { font: 600 0.75rem/1.2 var(--mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-soft); }
+.trip-facts dd { margin: 2px 0 0; }
+.trip-photo { margin: 6px 0; }
+.trip-photo img { width: 100%; height: auto; border-radius: var(--radius); display: block; }
+.trip-photo figcaption { font-size: 0.9rem; color: var(--ink-soft); margin-top: 6px; }
+.trip-photo .ph { border: 1.5px dashed var(--line); border-radius: var(--radius); padding: 40px 16px; text-align: center; color: var(--ink-soft); }
+@media (max-width: 640px) { .trip-facts { grid-template-columns: 1fr; } }
+
+/* Logbook: start here + paper merge */
+.startsteps { list-style: none; counter-reset: st; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.startsteps li { counter-increment: st; display: grid; gap: 4px; align-content: start; min-width: 0; padding-left: 44px; position: relative; }
+.startsteps li::before { content: counter(st); position: absolute; left: 0; top: 0; width: 32px; height: 32px; border-radius: 50%; background: var(--ocean); color: #fff; font: 800 1rem/32px var(--display); text-align: center; }
+.startsteps li.opt::before { content: "+"; background: var(--kelp); }
+.startsteps span { color: var(--ink-soft); font-size: 0.95rem; }
+.steps-inline { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
+#paper textarea { width: 100%; min-height: 120px; font: 0.9rem/1.4 var(--mono); padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); resize: vertical; }
+#paper label[for=papertext] { display: block; font-weight: 700; margin-bottom: 6px; }
+#paper .ptext { white-space: pre-wrap; font: 0.88rem/1.5 var(--mono); background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin: 12px 0 8px; }
+#paperrows tr.flag td:last-child { color: var(--warn, #B5542C); }
+@media (max-width: 860px) { .startsteps { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 520px) { .startsteps { grid-template-columns: 1fr; } }

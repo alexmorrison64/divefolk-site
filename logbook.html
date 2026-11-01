@@ -38,6 +38,16 @@
 </div></section>
 
 <section class="band" style="padding-top:0"><div class="wrap tool">
+  <div class="card start" aria-labelledby="start-h">
+    <h2 id="start-h">Start here</h2>
+    <ol class="startsteps">
+      <li><b>Get your dive files</b><span>Export them from Shearwater, Garmin or your dive app. <a href="#howto">Show me how</a></span></li>
+      <li><b>Drop them in below</b><span>Or press <a href="#sample">Try it with example dives</a> first to see how it works.</span></li>
+      <li><b>Check your dives and download</b><span>Join split dives, skip pool sessions, fix wrong times, then save your log.</span></li>
+      <li class="opt"><b>Optional: add your paper logbook</b><span>Photograph your pages and add your notes, buddies and sites to the right dives. <a href="#paper">How it works</a></span></li>
+    </ol>
+  </div>
+
   <div class="card" id="add">
     <h2>1. Add your dives</h2>
     <label class="drop" id="drop">
@@ -49,7 +59,7 @@
       <button class="btn ghost" id="sample" type="button">Try it with example dives</button>
       <p class="small muted" id="loadmsg" aria-live="polite">Not sure where your files are? See the steps below.</p>
     </div>
-    <details class="howto">
+    <details class="howto" id="howto">
       <summary><strong>How to get your dive files</strong></summary>
       <div class="stack" style="gap:14px;margin-top:12px">
         <div><h3>Shearwater</h3>
@@ -61,6 +71,8 @@
         <p class="small muted">If the file is very large (over about 4 GB) and won't open, unzip it and drop the files named UploadedFiles...zip instead.</p></div>
         <div><h3>Other computers</h3>
         <p>Many dive apps and Subsurface can export UDDF. Look for Export, then UDDF. More computers are coming; <a href="mailto:hello@divefolk.com">tell us which one you use</a>.</p></div>
+        <div><h3>Does your computer split one dive into two?</h3>
+        <p>DiveFolk joins them for you below. To stop it happening, see our guide to <a href="tech.html#split-dives">split dives for every major brand</a>.</p></div>
       </div>
     </details>
   </div>
@@ -95,6 +107,41 @@
       <button class="btn ghost" id="dl7" type="button">Download DL7 file (.zxu)</button>
     </div>
     <p class="small muted">The CSV opens in any spreadsheet. DL7 is the dive log format from DAN (Divers Alert Network); some dive log programs can import it. Each dive includes depth and water temperature readings, plus tank pressure when your computer records it.</p>
+  </div>
+
+  <div class="card" id="paper">
+    <h2>Optional: add your paper logbook</h2>
+    <p>Your paper logbook has things your computer doesn't: the site name, your buddy, visibility, weights and what you saw. DiveFolk can put those notes on the right computer dives for you.</p>
+    <ol class="steps-inline">
+      <li>Take a clear photo of each logbook page.</li>
+      <li>Copy the prompt below and give it to your own AI assistant (ChatGPT, Claude, Gemini or another) along with the photos. Your photos go to your assistant, not to DiveFolk.</li>
+      <li>Copy the table it gives you and paste it into the box below, or choose the CSV file it made.</li>
+    </ol>
+    <details class="howto"><summary><strong>Show the prompt</strong></summary>
+      <pre class="ptext" id="paperprompt">I&#x27;m attaching photos of my paper dive logbook. For each logged dive, make one row. Start with a header row using exactly these column names, in this order:
+Dive #, Date, Time in, Time out, Bottom time (min), Max depth (ft), Dive site, Location, Country, Buddy, Water temp at depth (°F), Visibility (ft), Start pressure (psi), End pressure (psi), Weight (lb), Exposure suit, Notes
+
+Write dates as YYYY-MM-DD and times like 10:05 AM. Give me the result as one table I can copy, or as a CSV file I can download. If something is hard to read, leave that cell blank and list it under &quot;Please check&quot; with the dive number. Don&#x27;t guess.</pre>
+      <div class="actions"><button class="btn ghost" type="button" id="copyprompt">Copy the prompt</button></div>
+    </details>
+    <label for="papertext" style="margin-top:14px">Paste your logbook table here</label>
+    <textarea id="papertext" rows="6" placeholder="Paste the table from your AI assistant or your spreadsheet, including the header row"></textarea>
+    <div class="actions" style="align-items:center">
+      <button class="btn" id="match" type="button">Match with my computer dives</button>
+      <label class="btn ghost" style="cursor:pointer">Choose a CSV file<input type="file" id="paperfile" accept=".csv,.tsv,.txt" class="visually-hidden"></label>
+      <button class="btn ghost" id="samplepaper" type="button">Try an example paper log</button>
+    </div>
+    <p class="small muted" id="papermsg" aria-live="polite">No computer files? You can still paste your paper log and download it as a clean spreadsheet.</p>
+    <div id="paperresult" hidden>
+      <div class="stats" id="paperstats"></div>
+      <div class="tablewrap"><table>
+        <thead><tr><th>Dive #</th><th>Date</th><th>From your computer</th><th>From your paper log</th><th>Please check</th></tr></thead>
+        <tbody id="paperrows"></tbody>
+      </table></div>
+      <p class="small muted">Computer data is used for times, depth, temperature and air. Your paper log is used for site, buddy, visibility, weights, suit and notes. Fix anything marked "Please check" with the Clock fix or Log it controls above, or in your spreadsheet after you download.</p>
+      <div class="actions"><button class="btn" id="mergedcsv" type="button">Download my merged log (CSV)</button></div>
+      <p class="small muted">The columns match the <a href="index.html#spreadsheet">DiveFolk dive log spreadsheet</a>, so you can paste the rows straight in.</p>
+    </div>
   </div>
 </div></section>
 
@@ -207,6 +254,34 @@
     $('review').hidden = !dives.length;
     $('export').hidden = !dives.length;
     $('dl7').disabled = $('csv').disabled = !L.length;
+    if (paper) renderPaper();
+  }
+
+  let paper = null;
+  function readPaper(text) {
+    const r = C.parsePaperLog(text);
+    if (!r.rows.length) { $('papermsg').innerHTML = '<span class="warn">No rows found. Paste the whole table, including the header row.</span>'; paper = null; $('paperresult').hidden = true; return; }
+    if (!r.rows.some(x => x.dateObj)) { $('papermsg').innerHTML = '<span class="warn">DiveFolk could not read the dates. Make sure there is a Date column, such as 2026-06-14.</span>'; }
+    paper = r;
+    renderPaper();
+  }
+  function renderPaper() {
+    const pairs = C.matchPaper(logged(), paper.rows);
+    const both = pairs.filter(p => p.dive && p.paper).length;
+    const check = pairs.filter(p => p.flags.length).length;
+    $('paperstats').innerHTML =
+      `<div class="stat"><b>${both}</b>matched to a computer dive</div>` +
+      `<div class="stat"><b>${pairs.filter(p => !p.dive).length}</b>paper only</div>` +
+      `<div class="stat"><b>${check}</b>to check</div>`;
+    const t = d => `${MONTHS[d.start.mo - 1]} ${d.start.d}, ${d.start.y}`;
+    $('paperrows').innerHTML = pairs.map(({ dive: d, paper: p, flags }) => `<tr class="${flags.length ? 'flag' : ''}">
+      <td>${esc((p && p.num) || (d && d.logNumber) || '')}</td>
+      <td>${d ? t(d) : esc((p && p.date) || '')}</td>
+      <td>${d ? `${hr12(d.start.h, d.start.mi)} &middot; ${ft(d.maxDepth)} ft &middot; ${Math.round(d.duration / 60)} min` : '<span class="muted">none</span>'}</td>
+      <td>${p ? esc([p.site, p.timeIn, p.depthFt ? p.depthFt + ' ft' : '', p.buddy].filter(Boolean).join(' · ')) : '<span class="muted">none</span>'}</td>
+      <td>${flags.length ? esc(flags.join('; ')) : '<span class="chip live">OK</span>'}</td></tr>`).join('');
+    $('paperresult').hidden = false;
+    $('papermsg').textContent = `Read ${plural(paper.rows.length, 'paper entry', 'paper entries')}.` + (paper.unknownHeaders.length ? ` Skipped columns DiveFolk doesn't use: ${paper.unknownHeaders.join(', ')}.` : '');
   }
 
   function save(text, name, type) {
@@ -241,6 +316,20 @@
   const day = () => { const d = new Date(); return `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}`; };
   $('dl7').addEventListener('click', () => save(C.toDL7(logged()), `divefolk-logbook-${day()}.zxu`, 'text/plain'));
   $('csv').addEventListener('click', () => save(C.toCSV(logged()), `divefolk-logbook-${day()}.csv`, 'text/csv'));
+  $('match').addEventListener('click', () => readPaper($('papertext').value));
+  $('paperfile').addEventListener('change', async e => { const f = e.target.files[0]; if (f) { const t = await f.text(); $('papertext').value = t; readPaper(t); } });
+  $('samplepaper').addEventListener('click', async () => {
+    try {
+      if (!dives.length) $('sample').click();
+      const t = await (await fetch('sample-paper.tsv')).text();
+      $('papertext').value = t; setTimeout(() => readPaper(t), 300);
+    } catch (e) { $('papermsg').textContent = 'The example could not be loaded.'; }
+  });
+  $('copyprompt').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText($('paperprompt').textContent); $('copyprompt').textContent = 'Copied'; }
+    catch (e) { $('copyprompt').textContent = 'Select the text above and copy it'; }
+  });
+  $('mergedcsv').addEventListener('click', () => save(C.toMergedCSV(C.matchPaper(logged(), paper.rows)), `divefolk-merged-log-${day()}.csv`, 'text/csv'));
 })();
 </script>
 <script src="updates.js" defer></script>
