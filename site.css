@@ -327,4 +327,5 @@ input[type=number] { width: 90px; }
 
 .trip-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-items: start; }
 .trip-pair .trip-photo img { aspect-ratio: 4 / 3; object-fit: cover; }
+.trip-pair.tall .trip-photo img { aspect-ratio: 3 / 4; }
 @media (max-width: 640px) { .trip-pair { grid-template-columns: 1fr; } }
