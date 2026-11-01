@@ -433,7 +433,7 @@
     const x = h.toLowerCase().replace(/[^a-z#°]+/g, ' ').trim();
     if (/^(dive )?(#|no|num|number)\b|^dive #/.test(x) || x === 'dive' || x === '#') return 'num';
     if (/\bdate\b/.test(x)) return 'date';
-    if (/time in|start time|entry time|^start$|^in$/.test(x)) return 'timeIn';
+    if (/time in|start time|entry time|^start$|^in$|^time$/.test(x)) return 'timeIn';
     if (/time out|end time|exit time|^out$/.test(x)) return 'timeOut';
     if (/bottom time|minutes|duration|dive time/.test(x)) return 'minutes';
     if (/depth/.test(x)) return 'depthFt';
