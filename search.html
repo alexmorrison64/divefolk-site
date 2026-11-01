@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<title>Search DiveFolk</title>
+<meta name="description" content="Search DiveFolk's guides, tools, trip reports and news.">
+<link rel="canonical" href="https://divefolk.com/search.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DiveFolk">
+<meta property="og:title" content="Search DiveFolk">
+<meta property="og:description" content="Search DiveFolk's guides, tools, trip reports and news.">
+<meta property="og:url" content="https://divefolk.com/search.html">
+<meta property="og:image" content="https://divefolk.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon-64.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="site-head"><div class="wrap">
+  <a class="brand" href="index.html"><img src="img/turtle-icon.png" alt="" width="44" height="43"><span>DiveFolk</span></a>
+  <nav class="nav" aria-label="Main"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html">Commons</a><a href="about.html">About</a><a class="searchlink" href="search.html" aria-label="Search" aria-current="page"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg></a><a class="join" href="join.html">Join free</a></nav>
+</div></header>
+<main>
+
+<section class="page-head"><div class="wrap">
+  <div>
+    <p class="eyebrow">Search</p>
+    <h1>Search DiveFolk</h1>
+    <form class="searchform" role="search" action="search.html" method="get">
+      <label for="q" class="visually-hidden">Search DiveFolk</label>
+      <input id="q" name="q" type="search" placeholder="Try: split dives, Garmin, flying after diving, Dominica" autocomplete="off">
+      <button class="btn" type="submit">Search</button>
+    </form>
+  </div>
+</div></section>
+<section class="band" style="padding-top:0"><div class="wrap stack" style="gap:14px">
+  <p class="small muted" id="searchmsg" aria-live="polite"></p>
+  <ol class="results" id="results"></ol>
+</div></section>
+
+<section class="updates" aria-labelledby="upd-h"><div class="wrap">
+  <form id="updatesform" class="updates-form" novalidate>
+    <div class="stack" style="gap:4px">
+      <h2 id="upd-h">Get DiveFolk updates</h2>
+      <p>An email when we add a new tool or guide. About once a month, never more than that. Unsubscribe any time.</p>
+    </div>
+    <div class="updates-fields">
+      <label><span class="visually-hidden">First name</span><input name="uname" placeholder="First name" autocomplete="given-name" required></label>
+      <label><span class="visually-hidden">Email</span><input name="uemail" type="email" placeholder="Email" autocomplete="email" required></label>
+      <button class="btn" type="submit">Notify me</button>
+    </div>
+    <p class="small muted">For people 13 and older. We never sell your information. <a href="privacy.html">Privacy</a></p>
+    <p class="formmsg" role="status" hidden></p>
+  </form>
+</div></section>
+</main>
+<footer class="site-foot"><div class="wrap">
+  <nav aria-label="Footer"><a href="index.html">Home</a><a href="logbook.html">Logbook</a><a href="commons.html">DiveFolk Commons</a><a href="thinking-about-diving.html">Thinking about diving?</a><a href="new-to-diving.html">New to diving</a><a href="tech.html">Technology Explained</a><a href="ai.html">DiveFolk AI</a><a href="resources.html">Other Resources</a><a href="news.html">DiveFolk News</a><a href="trips.html">DiveFolk Trips</a><a href="about.html">About</a><a href="join.html">Join</a><a href="privacy.html">Privacy</a></nav>
+  <p class="byus"><b>For divers, by divers.</b> Have a tip, an idea to make DiveFolk better, or something that didn't work? Email <a href="mailto:hello@divefolk.com?subject=Idea%20for%20DiveFolk">hello@divefolk.com</a>. We read every message.</p>
+  <p>DiveFolk is free and independent. It is not affiliated with PADI, DAN, Shearwater or any dive computer maker; their names are used only to say what DiveFolk works with.</p>
+  <p>&copy; 2026 DiveFolk</p>
+</div></footer>
+<script>
+(function () {
+  const q = document.getElementById('q'), list = document.getElementById('results'), msg = document.getElementById('searchmsg');
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  let index = null;
+  async function run(term) {
+    term = term.trim();
+    history.replaceState(null, '', term ? 'search.html?q=' + encodeURIComponent(term) : 'search.html');
+    if (!term) { list.innerHTML = ''; msg.textContent = ''; return; }
+    if (!index) { try { index = await (await fetch('search-index.json')).json(); } catch (e) { msg.textContent = 'Search could not load. Please try again.'; return; } }
+    const words = norm(term).split(/\s+/).filter(w => w.length > 1);
+    const scored = index.map(e => {
+      const t = norm(e.t), x = norm(e.x), p = norm(e.p);
+      let score = 0, all = true;
+      for (const w of words) {
+        const inT = t.includes(w), inX = x.includes(w), inP = p.includes(w);
+        if (!inT && !inX && !inP) { all = false; break; }
+        score += (inT ? 10 : 0) + (inP ? 3 : 0) + (inX ? 1 + Math.min(4, x.split(w).length - 1) : 0);
+      }
+      if (all && e.h) score += 6;
+      return all ? { e, score } : null;
+    }).filter(Boolean).sort((a, b) => b.score - a.score).filter((r, i, arr) => arr.findIndex(o => o.e.t === r.e.t && o.e.x.slice(0, 80) === r.e.x.slice(0, 80)) === i).slice(0, 30);
+    msg.textContent = scored.length ? `${scored.length} result${scored.length === 1 ? '' : 's'} for "${term}"` : `Nothing found for "${term}". Try a shorter or different word.`;
+    const snip = x => { const lx = norm(x); const i = Math.max(0, Math.min(...words.map(w => { const k = lx.indexOf(w); return k < 0 ? 1e9 : k; })) - 60); return (i > 0 ? '... ' : '') + x.slice(i, i + 220) + (x.length > i + 220 ? ' ...' : ''); };
+    list.innerHTML = scored.map(({ e }) => `<li><a href="${esc(e.u)}"><b>${esc(e.t)}</b></a><span class="small muted">${esc(e.p)}</span><p>${esc(snip(e.x))}</p></li>`).join('');
+  }
+  const start = new URLSearchParams(location.search).get('q') || '';
+  q.value = start; run(start);
+  let t; q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => run(q.value), 200); });
+  q.form.addEventListener('submit', e => { e.preventDefault(); run(q.value); });
+  q.focus();
+})();
+</script>
+<script src="updates.js" defer></script>
+</body>
+</html>
