@@ -250,6 +250,10 @@ input[type=number] { width: 90px; }
 .subnav a:hover { color: var(--ocean); background: var(--band); }
 .subnav a[aria-current="page"] { color: var(--ocean); background: var(--band); }
 .subbar { border-bottom: 1px solid var(--line); background: var(--surface); }
+@media (max-width: 600px) {
+  .subnav { gap: 2px 4px; padding-block: 8px; }
+  .subnav a { padding: 8px 10px; font-size: 0.95rem; }
+}
 .hubgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
 .hubgrid a.card { text-decoration: none; color: var(--ink); }
 .hubgrid a.card:hover { border-color: var(--ocean); }

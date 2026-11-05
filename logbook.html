@@ -70,7 +70,9 @@
         <p>In Garmin Connect, go to your account settings and find <b>Export Your Data</b> (it may be under Data Management or Privacy). Garmin emails you a download link, usually within a couple of days. Drop that whole .zip here. DiveFolk finds the dives and skips your runs, walks and other activities.</p>
         <p class="small muted">If the file is very large (over about 4 GB) and won't open, unzip it and drop the files named UploadedFiles...zip instead.</p></div>
         <div><h3>Other computers</h3>
-        <p>Many dive apps and Subsurface can export UDDF. Look for Export, then UDDF. More computers are coming; <a href="mailto:hello@divefolk.com">tell us which one you use</a>.</p></div>
+        <p>Many dive apps, including Subsurface, can export UDDF. Look for Export, then UDDF. DiveFolk has been tested most with Shearwater's UDDF files, so if yours doesn't load, <a href="mailto:hello@divefolk.com?subject=My%20dive%20file">tell us which app or computer you use</a>.</p></div>
+        <div><h3>No dive computer?</h3>
+        <p>Use the <a href="index.html#spreadsheet">free DiveFolk dive log spreadsheet</a>, or skip to <a href="#paper">add your paper logbook</a> below and download it as a clean spreadsheet.</p></div>
         <div><h3>Does your computer split one dive into two?</h3>
         <p>DiveFolk joins them for you below. To stop it happening, see our guide to <a href="split-dives.html">split dives for every major brand</a>.</p></div>
       </div>
@@ -169,6 +171,15 @@ Write dates as YYYY-MM-DD and times like 10:05 AM. Give me the result as one tab
 </div></footer>
 <script src="core.js"></script>
 <script>
+// A link to a closed "How to" section opens it, so the steps are visible right away
+(function () {
+  function openTarget() {
+    const el = location.hash && document.getElementById(location.hash.slice(1));
+    if (el && el.tagName === 'DETAILS') el.open = true;
+  }
+  window.addEventListener('hashchange', openTarget);
+  openTarget();
+})();
 (function () {
   const C = window.DivefolkCore;
   let dives = [], join = [], include = [], dropPiece = [], shift = {};
