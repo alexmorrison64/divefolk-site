@@ -333,3 +333,7 @@ input[type=number] { width: 90px; }
 .trip-pair .trip-photo img { aspect-ratio: 4 / 3; object-fit: cover; }
 .trip-pair.tall .trip-photo img { aspect-ratio: 3 / 4; }
 @media (max-width: 640px) { .trip-pair { grid-template-columns: 1fr; } }
+
+/* Logbook beta note */
+.betanote { background: var(--sand); color: var(--sand-ink); border-left: 4px solid var(--ocean); border-radius: var(--radius); padding: 14px 18px; }
+.betanote p { margin: 0; }
