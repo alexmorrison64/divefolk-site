@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <title>DiveFolk Logbook</title>
-<meta name="description" content="Bring in your dive computer's dives, join split dives, fix wrong times, and download a clean log. Free, in your browser.">
+<meta name="description" content="Free, no-install tool to clean up your dives: join split dives, fix wrong times, match your paper logbook, then download a file for your spreadsheet or dive log app.">
 <link rel="canonical" href="https://divefolk.com/logbook.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DiveFolk">
 <meta property="og:title" content="DiveFolk Logbook">
-<meta property="og:description" content="Bring in your dive computer's dives, join split dives, fix wrong times, and download a clean log. Free, in your browser.">
+<meta property="og:description" content="Free, no-install tool to clean up your dives: join split dives, fix wrong times, match your paper logbook, then download a file for your spreadsheet or dive log app.">
 <meta property="og:url" content="https://divefolk.com/logbook.html">
 <meta property="og:image" content="https://divefolk.com/img/og.png">
 <meta property="og:image:width" content="1200">
@@ -32,7 +32,8 @@
   <div>
     <p class="eyebrow">DiveFolk Logbook <span class="chip beta" style="margin-left:8px">Beta</span></p>
     <h1>Clean up your dive log</h1>
-    <p class="lede">Add the files from your dive computer, check how DiveFolk grouped them, then download your log. Works with Shearwater, Garmin and other computers that export UDDF. Nothing is uploaded; it all happens in this browser window.</p>
+    <p class="lede">A free tool to clean up your dives and move them where you want. Join split dives, fix wrong times and match your paper logbook, then download a file for your spreadsheet or dive log app. Works with Shearwater, Garmin and other computers that export UDDF. Nothing to install and nothing is uploaded; it all happens in this browser window.</p>
+    <p class="small">DiveFolk isn't a full logbook app. Looking for one? See <a href="which-dive-log-app.html">Which dive log app?</a></p>
   </div>
   <img src="img/turtle-swim.png" alt="" width="544" height="404">
 </div></section>
@@ -112,7 +113,19 @@
       <button class="btn" id="csv" type="button">Download spreadsheet (CSV)</button>
       <button class="btn ghost" id="dl7" type="button">Download DL7 file (.zxu)</button>
     </div>
-    <p class="small muted">The CSV opens in any spreadsheet. DL7 is the dive log format from DAN (Divers Alert Network); some dive log programs can import it. Each dive includes depth and water temperature readings, plus tank pressure when your computer records it.</p>
+    <p class="small muted">The CSV opens in any spreadsheet. DL7 is the dive log format from DAN (Divers Alert Network). Each dive in it includes depth and water temperature readings, plus tank pressure when your computer records it.</p>
+    <details class="howto" id="move">
+      <summary><strong>Move your dives into Submersion or Subsurface</strong></summary>
+      <div class="stack" style="gap:14px;margin-top:12px">
+        <div><h3>Submersion</h3>
+        <p>Download the DL7 file above. In Submersion, choose Import and pick the .zxu file. Submersion recognizes it as a DL7 file.</p></div>
+        <div><h3>Subsurface</h3>
+        <p>Download the DL7 file above. In Subsurface, choose Import, then Import log files, and pick the .zxu file. A setup window opens with DL7 already chosen; press OK.</p></div>
+        <div><h3>Your paper logbook notes</h3>
+        <p>The DL7 file holds your computer's data, not your sites, buddies or notes. Those are in the merged spreadsheet from the paper logbook step. Both apps can import a spreadsheet (CSV) and let you match its columns, or you can copy the details across by hand.</p></div>
+        <p class="small muted">We checked our files against Submersion's and Subsurface's own import code, but we haven't tested them in the apps yet. If an import doesn't work, please <a href="mailto:hello@divefolk.com?subject=Import%20problem">tell us which app and version</a>.</p>
+      </div>
+    </details>
   </div>
 
   <div class="card" id="paper">
