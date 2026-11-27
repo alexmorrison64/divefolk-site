@@ -337,3 +337,10 @@ input[type=number] { width: 90px; }
 /* Logbook beta note */
 .betanote { background: var(--sand); color: var(--sand-ink); border-left: 4px solid var(--ocean); border-radius: var(--radius); padding: 14px 18px; }
 .betanote p { margin: 0; }
+
+/* Share your tip box on dive site pages */
+.tipform label:not(fieldset label) { display: flex; flex-direction: column; gap: 4px; font-weight: 600; }
+.tipform input:not([type=radio]), .tipform textarea { font: inherit; font-size: 1rem; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--ink); width: 100%; font-weight: 400; }
+.tipform textarea { min-height: 100px; resize: vertical; }
+.tipform input[type=radio] { width: 20px; height: 20px; accent-color: var(--ocean); vertical-align: middle; margin-right: 6px; }
+.tipform fieldset label { padding: 4px 0; }
