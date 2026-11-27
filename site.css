@@ -245,14 +245,20 @@ input[type=number] { width: 90px; }
 @media (max-width: 640px) { .form .row2 { grid-template-columns: 1fr; } }
 
 /* Commons sub-navigation */
-.subnav { display: flex; flex-wrap: wrap; gap: 6px; padding-block: 14px; }
-.subnav a { text-decoration: none; font-weight: 700; font-size: 0.98rem; padding: 7px 12px; border-radius: 10px; color: var(--ink-soft); }
+.subnav { display: flex; flex-wrap: wrap; gap: 2px; padding-block: 10px; }
+.subnav a { flex: none; white-space: nowrap; text-decoration: none; font-weight: 700; font-size: 0.9rem; padding: 7px 8px; border-radius: 10px; color: var(--ink-soft); }
+@media (max-width: 900px) {
+  .subnav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding-right: 28px;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent); }
+  .subnav::-webkit-scrollbar { display: none; }
+  .subnav.sl { -webkit-mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(to right, transparent, #000 28px, #000 calc(100% - 28px), transparent); }
+}
 .subnav a:hover { color: var(--ocean); background: var(--band); }
 .subnav a[aria-current="page"] { color: var(--ocean); background: var(--band); }
 .subbar { border-bottom: 1px solid var(--line); background: var(--surface); }
 @media (max-width: 600px) {
-  .subnav { gap: 2px 4px; padding-block: 8px; }
-  .subnav a { padding: 8px 10px; font-size: 0.95rem; }
+  .subnav { padding-block: 6px; }
+  .subnav a { padding: 8px 10px; }
 }
 .hubgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
 .hubgrid a.card { text-decoration: none; color: var(--ink); }
@@ -344,3 +350,8 @@ input[type=number] { width: 90px; }
 .tipform textarea { min-height: 100px; resize: vertical; }
 .tipform input[type=radio] { width: 20px; height: 20px; accent-color: var(--ocean); vertical-align: middle; margin-right: 6px; }
 .tipform fieldset label { padding: 4px 0; }
+
+/* Related links at the end of guides and local pages */
+.related h2 { font-size: var(--step-1); margin-bottom: 10px; }
+.rel-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px 20px; }
+.rel-list a { font-weight: 700; }
