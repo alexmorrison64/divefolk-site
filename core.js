@@ -11,6 +11,7 @@
     return Array.from(el.getElementsByTagNameNS('*', name));
   }
   function first(el, name) {
+    if (!el) return null;
     const k = el.getElementsByTagNameNS('*', name);
     return k.length ? k[0] : null;
   }
@@ -23,7 +24,13 @@
 
   // Shearwater writes local wall-clock time but tags it "Z"; treat it as local.
   function parseLocal(s) {
-    const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?/.exec(s || '');
+    s = (s || '').trim();
+    const d = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+    if (d) { // date only: assume midnight and flag it
+      return { y: +d[1], mo: +d[2], d: +d[3], h: 0, mi: 0, s: 0, noTime: true,
+               epoch: Date.UTC(+d[1], +d[2] - 1, +d[3]) / 1000 };
+    }
+    const m = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2}))?/.exec(s);
     if (!m) return null;
     return { y: +m[1], mo: +m[2], d: +m[3], h: +m[4], mi: +m[5], s: +(m[6] || 0),
              epoch: Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +(m[6] || 0)) / 1000 };
@@ -37,7 +44,7 @@
   const stamp = t => `${t.y}${p2(t.mo)}${p2(t.d)}${p2(t.h)}${p2(t.mi)}${p2(t.s)}`;
 
   /* Parse one UDDF document (string) into an array of raw dives. */
-  function parseUDDF(xmlText, DOMParserImpl, sourceName) {
+  function parseUDDF(xmlText, DOMParserImpl, sourceName, stats) {
     const P = DOMParserImpl || root.DOMParser;
     const doc = new P().parseFromString(xmlText, 'text/xml');
     const dc = first(doc, 'divecomputer');
@@ -48,7 +55,11 @@
     return kids(doc, 'dive').map(dive => {
       const before = first(dive, 'informationbeforedive');
       const after = first(dive, 'informationafterdive');
-      const start = parseLocal(first(before, 'datetime').textContent);
+      // Most apps put the start in informationbeforedive; some put it right under <dive>.
+      const dt = first(before, 'datetime') || first(dive, 'datetime');
+      const start = dt ? parseLocal(dt.textContent) : null;
+      if (!start) { if (stats) stats.noStart = (stats.noStart || 0) + 1; return null; }
+      if (start.noTime && stats) stats.noTime = (stats.noTime || 0) + 1;
       const samples = kids(dive, 'waypoint').map(w => {
         const tp = first(w, 'tankpressure');
         return {
@@ -79,7 +90,7 @@
         samples,
         computer
       };
-    });
+    }).filter(Boolean);
   }
 
   /* ---------- Garmin and other FIT files ----------
@@ -267,7 +278,7 @@
      into dive pieces. onProgress(done, total) is optional. */
   async function readDiveFiles(files, opts) {
     const o = opts || {};
-    const result = { dives: [], bad: [], other: 0, apnea: 0, files: 0, zip64: [] };
+    const result = { dives: [], bad: [], other: 0, apnea: 0, files: 0, zip64: [], noStart: 0, noTime: 0 };
     const queue = files.map(f => ({ name: f.name, blob: f }));
     let done = 0;
     const lower = n => n.toLowerCase();
@@ -286,7 +297,7 @@
         if (n.endsWith('.gz')) bytes = await inflate(bytes, 'gzip');
         result.files++;
         if (n.endsWith('.uddf') || n.endsWith('.xml')) {
-          result.dives.push(...parseUDDF(new TextDecoder().decode(bytes), o.DOMParser, it.name));
+          result.dives.push(...parseUDDF(new TextDecoder().decode(bytes), o.DOMParser, it.name, result));
         } else {
           const r = parseFIT(bytes, it.name);
           if (r.kind === 'dive') result.dives.push(...r.dives);

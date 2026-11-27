@@ -232,9 +232,11 @@ Write dates as YYYY-MM-DD and times like 10:05 AM. Give me the result as one tab
     const notes = [];
     if (r.other) notes.push(`skipped ${plural(r.other, 'activity', 'activities')} that ${r.other === 1 ? "wasn't a dive" : "weren't dives"}`);
     if (r.apnea) notes.push(`skipped ${plural(r.apnea, 'freediving session')} (not supported yet)`);
+    if (r.noStart) notes.push(`skipped ${plural(r.noStart, 'dive')} with no date in the file`);
     const msg = label ? `${label} ${plural(dives.length, 'dive piece')}.`
       : `Added ${plural(added, 'dive piece')}${notes.length ? '; ' + notes.join(', ') : ''}.`;
     $('loadmsg').innerHTML = esc(msg) +
+      (r.noTime ? ` <span class="warn">${plural(r.noTime, 'dive')} had a date but no start time, so ${r.noTime === 1 ? 'it shows' : 'they show'} at midnight. Fix the time in your spreadsheet after you download.</span>` : '') +
       (r.dives.some(d => d.timeIsUTC) ? ' <span class="warn">Some Garmin dives had no local time saved, so they show in UTC. Use Clock fix if a time looks wrong.</span>' : '') +
       (r.bad.length ? ` <span class="warn">Could not read: ${esc(r.bad.slice(0, 5).join(', '))}${r.bad.length > 5 ? ' and others' : ''}.</span>` : '') +
       (r.zip64.length ? ' <span class="warn">That zip is too large to open here. Unzip it and drop the UploadedFiles zips inside instead.</span>' : '') +
