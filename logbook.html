@@ -12,7 +12,7 @@
 <meta property="og:title" content="Free dive log cleanup tool: join split dives, fix times | DiveFolk">
 <meta property="og:description" content="Free, no-install tool to clean up your dives: join split dives, fix wrong times, match your paper logbook, then download a file for your spreadsheet or dive log app.">
 <meta property="og:url" content="https://divefolk.com/logbook.html">
-<meta property="og:image" content="https://divefolk.com/img/og.png">
+<meta property="og:image" content="https://divefolk.com/img/og/logbook.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -37,7 +37,7 @@
     <p class="small">DiveFolk isn't a full logbook app. Looking for one? See <a href="which-dive-log-app.html">Which dive log app?</a></p>
   </div>
   <img src="img/turtle-swim.png" alt="" width="544" height="404">
-</div></section>
+</div></section><nav class="onpage" aria-label="On this page"><div class="wrap"><details><summary>On this page</summary><ul><li><a href="#start-h">Start here</a></li><li><a href="#1-add-your-dives">1. Add your dives</a></li><li><a href="#2-check-your-dives">2. Check your dives</a></li><li><a href="#3-download-your-log">3. Download your log</a></li><li><a href="#optional-add-your-paper-logbook">Optional: add your paper logbook</a></li><li><a href="#a-dive-log-spreadsheet-you-own">A dive log spreadsheet you own</a></li></ul></details></div></nav>
 
 <section class="band" style="padding-top:0"><div class="wrap tool">
   <div class="betanote" role="note">
@@ -55,7 +55,7 @@
   </div>
 
   <div class="card" id="add">
-    <h2>1. Add your dives</h2>
+    <h2 id="1-add-your-dives">1. Add your dives</h2>
     <label class="drop" id="drop">
       <input type="file" id="file" accept=".uddf,.xml,.fit,.gz,.zip" multiple class="visually-hidden">
       <strong>Drop your dive files here</strong>
@@ -86,7 +86,7 @@
   </div>
 
   <div class="card" id="review" hidden>
-    <h2>2. Check your dives</h2>
+    <h2 id="2-check-your-dives">2. Check your dives</h2>
     <div class="stats" id="stats"></div>
     <details>
       <summary><strong>What do these columns mean?</strong></summary>
@@ -109,7 +109,7 @@
   </div>
 
   <div class="card" id="export" hidden>
-    <h2>3. Download your log</h2>
+    <h2 id="3-download-your-log">3. Download your log</h2>
     <div class="actions">
       <button class="btn" id="csv" type="button">Download spreadsheet (CSV)</button>
       <button class="btn ghost" id="dl7" type="button">Download DL7 file (.zxu)</button>
@@ -131,7 +131,7 @@
   </div>
 
   <div class="card" id="paper">
-    <h2>Optional: add your paper logbook</h2>
+    <h2 id="optional-add-your-paper-logbook">Optional: add your paper logbook</h2>
     <p>Your paper logbook has things your computer doesn't: the site name, your buddy, visibility, weights and what you saw. DiveFolk can put those notes on the right computer dives for you.</p>
     <ol class="steps-inline">
       <li>Take a clear photo of each logbook page.</li>
@@ -169,7 +169,7 @@ Write dates as YYYY-MM-DD and times like 10:05 AM. Give me the result as one tab
 <section class="band tint" id="spreadsheet"><div class="wrap split">
   <div class="stack">
     <p class="eyebrow">No dive computer? &middot; Free download</p>
-    <h2>A dive log spreadsheet you own</h2>
+    <h2 id="a-dive-log-spreadsheet-you-own">A dive log spreadsheet you own</h2>
     <p>Start with the basics most divers log. When you want more, click the + buttons to open extra columns for conditions, training, gear and gas, dive computer data, and tracking.</p>
     <div class="actions"><a class="btn ghost" href="downloads/divefolk-dive-log-template-v1.xlsx" download="DiveFolk Dive Log Template v1.xlsx">Download the spreadsheet (.xlsx)</a></div>
     <p class="small muted">Opens in Excel, Google Sheets, Apple Numbers and LibreOffice. Version 1.0.</p>
