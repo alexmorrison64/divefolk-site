@@ -18,7 +18,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="img/favicon-64.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="preload" href="fonts/atkinson-hyperlegible-400-normal-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/bricolage-grotesque-800-normal-latin.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="site.css">
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "WebSite", "name": "DiveFolk", "url": "https://divefolk.com/", "potentialAction": {"@type": "SearchAction", "target": "https://divefolk.com/search.html?q={search_term_string}", "query-input": "required name=search_term_string"}}, {"@context": "https://schema.org", "@type": "Organization", "name": "DiveFolk", "url": "https://divefolk.com/", "logo": "https://divefolk.com/img/turtle-icon.png", "email": "hello@divefolk.com"}]</script>
 </head>
@@ -63,65 +63,43 @@
   </div>
 </div></section>
 
-<section class="band tint" id="commons"><div class="wrap stack" style="gap:28px">
+
+<section class="band tint" id="new"><div class="wrap stack" style="gap:24px">
+  <div class="stack" style="gap:8px">
+    <p class="eyebrow">New this week</p>
+    <h2>What's new on DiveFolk</h2>
+  </div>
+  <div class="hubgrid">
+    <div class="card stack" style="gap:10px"><h3>New pages</h3><ul class="newlist"><li><a href="willow-springs.html">Willow Springs, Pennsylvania</a> <span class="small muted">A training quarry with a sunk Learjet and a 72-foot trawler.</span></li><li><a href="summersville-lake.html">Summersville Lake, West Virginia</a> <span class="small muted">Clear water and 100-foot cliffs, open for diving in summer.</span></li><li><a href="lake-allure.html">Lake Allure, Pennsylvania</a> <span class="small muted">A small, quiet weekend quarry about 2&frac14; hours from DC.</span></li><li><a href="where-to-dive-near-dc.html">Where to dive near DC</a> <span class="small muted">Every local site, with drive times from downtown DC.</span></li></ul></div>
+    <div class="card stack" style="gap:10px"><h3>DiveFolk News, week of November 23, 2026</h3><ul class="newlist"><li><a href="news.html">Garmin Descent G1 update improves cold-water buttons and fixes random dive locations</a> <span class="small muted">Dive tech update</span></li><li><a href="news.html">US regulators warn snorkellers to stop using some Qing Song full-face masks</a> <span class="small muted">Training and safety</span></li><li><a href="news.html">Cyprus weighs licensing rules for dive centres</a> <span class="small muted">Training and safety</span></li></ul>
+      <p class="small"><a href="news.html">All of this week's news</a></p></div>
+  </div>
+</div></section>
+
+<section class="band" id="commons"><div class="wrap stack" style="gap:24px">
   <div class="stack" style="gap:10px">
     <p class="eyebrow">Start here &middot; Free guides</p>
     <h2>The DiveFolk Commons</h2>
-    <p>Free guides and the best of what's out there, in plain words and kept up to date. Pick the one that fits you.</p>
+    <p>Free guides in plain words, kept up to date. Pick the one that fits you.</p>
   </div>
   <div class="hubgrid">
     <a class="card" href="thinking-about-diving.html"><h3>Thinking about diving?</h3><p>Try it in a pool first, what a course involves and how to pick a dive shop.</p></a>
-    <a class="card" href="new-to-diving.html"><h3>New to diving</h3><p>Tips for your first trips, first gear and your first year of diving.</p></a>
-    <a class="card" href="tech.html"><h3>Technology Explained</h3><p>Dive computers, dive data and how to keep your log safe, in plain words.</p></a>
-    <a class="card" href="split-dives.html"><h3>Split dives guide</h3><p>Why your dive computer logs one dive as two, and the setting that fixes it for each major brand.</p></a>
-    <a class="card" href="ai.html"><h3>DiveFolk AI</h3><p>A diver's guide to AI, with fill-in-the-blank prompts for trips, gear, skills and more.</p></a>
-    <a class="card" href="news.html"><h3>DiveFolk News</h3><p>Diving news worth your time, including new dive tech, summarized and updated weekly.</p></a>
-    <a class="card" href="trips.html"><h3>DiveFolk Trips</h3><p>Trip reports from divers, and guides to diving near DC.</p></a>
-    <a class="card" href="resources.html"><h3>Other Resources</h3><p>Communities, buddy finders, safety, conservation, magazines and tools for divers.</p></a>
+    <a class="card" href="new-to-diving.html"><h3>New to diving</h3><p>Your first trips, first gear and first year, plus guides on tanks, wetsuits, ears and diving with a newer buddy.</p></a>
+    <a class="card" href="where-to-dive-near-dc.html"><h3>Where to dive near DC</h3><p>Quarries, lakes and wrecks within a drive, with prices, rules and drive times.</p></a>
+    <a class="card" href="tech.html"><h3>Technology Explained</h3><p>Dive computers, split dives, dive log apps and keeping your log safe.</p></a>
   </div>
-  <div class="actions"><a class="btn" href="commons.html">See all of the Commons</a></div>
+  <div class="actions"><a class="btn" href="commons.html">See all of the Commons</a><a class="btn ghost" href="news.html">DiveFolk News</a><a class="btn ghost" href="trips.html">Trip reports</a></div>
 </div></section>
 
-<section class="band" id="logbook"><div class="wrap stack" style="gap:28px">
-  <div class="stack" style="gap:10px">
+<section class="band tint" id="logbook"><div class="wrap">
+  <div class="card stack" style="gap:12px">
     <p class="eyebrow">Free tool <span class="chip beta" style="margin-left:8px">Beta</span></p>
     <h2>DiveFolk Logbook</h2>
-    <p>A free tool to clean up your dives before you keep or move them: join split dives, fix wrong times and match your paper logbook to your computer dives. It runs in your browser with nothing to install, and your files never leave your computer.</p>
-    <p class="small">It isn't a full logbook app. Take the clean file to a spreadsheet or to a free app like Submersion or Subsurface. <a href="which-dive-log-app.html">Which dive log app?</a></p>
+    <p>Clean up your dives before you keep or move them: join split dives, fix wrong times and match your paper logbook to your computer dives. Works with Shearwater and Garmin files, runs in your browser, and your files never leave your computer.</p>
+    <p class="small">It isn't a full logbook app. Take the clean file to a spreadsheet or to a free app like Submersion or Subsurface. <a href="which-dive-log-app.html">Which dive log app?</a> No dive computer? Get our <a href="logbook.html#spreadsheet">free dive log spreadsheet</a>.</p>
+    <div class="actions"><a class="btn" href="logbook.html">Open the DiveFolk Logbook</a></div>
   </div>
-  <ul class="sources">
-    <li><span><span class="chip live">Works now</span></span><b>Shearwater and Garmin</b><span>UDDF files from Shearwater Cloud and other dive apps, and Garmin files straight from Garmin Connect, one dive or your whole history.</span></li>
-    <li><span><span class="chip live">Works now</span></span><b>Your paper logbook</b><span>Photograph your pages, turn them into a table with your own AI assistant and our <a href="logbook.html#paper">ready-made prompt</a>, and DiveFolk puts your sites, buddies and notes on the right computer dives.</span></li>
-    <li><span><span class="chip live">Works now</span></span><b>Your spreadsheet</b><span>Copy rows from the DiveFolk dive log spreadsheet, or a CSV from another app, into the <a href="logbook.html#paper">logbook step</a>, and DiveFolk lines them up with your computer dives.</span></li>
-    <li><span><span class="chip soon">Planned</span></span><b>Other apps and computers</b><span>More dive computers' own files, such as Suunto. UDDF from other apps, such as Subsurface, may already work; <a href="mailto:hello@divefolk.com?subject=My%20dive%20file">tell us</a> if yours doesn't.</span></li>
-  </ul>
-  <ol class="steps">
-    <li><h3>Bring in your dives</h3><p>Add your files. Everything stays in your browser; nothing is uploaded.</p></li>
-    <li><h3>Check them</h3><p>DiveFolk joins dives split by a quick trip to the surface. You can undo any join, skip pool sessions, and fix a wrong time zone.</p></li>
-    <li><h3>Take it anywhere</h3><p>Download a spreadsheet or a DL7 file. Keep it in a folder you own, or import the DL7 file into Submersion or Subsurface.</p></li>
-  </ol>
-  <div class="actions"><a class="btn" href="logbook.html">Open the DiveFolk Logbook</a></div>
 </div></section>
-
-<section class="band tint" id="spreadsheet"><div class="wrap split">
-  <div class="stack">
-    <p class="eyebrow">Part of the Logbook &middot; Free download</p>
-    <h2>A dive log spreadsheet you own</h2>
-    <p>Start with the basics most divers log. When you want more, click the + buttons to open extra columns for conditions, training, gear and gas, dive computer data, and tracking.</p>
-    <div class="actions"><a class="btn ghost" href="downloads/divefolk-dive-log-template-v1.xlsx" download="DiveFolk Dive Log Template v1.xlsx">Download the spreadsheet (.xlsx)</a></div>
-    <p class="small muted">Opens in Excel, Google Sheets, Apple Numbers and LibreOffice. Version 1.0.</p>
-  </div>
-  <ul class="checks">
-    <li>17 basic columns: date, times, depth, bottom time, site, buddy, air in and out, weight, exposure suit, notes and more</li>
-    <li>29 extra columns you can open when you need them</li>
-    <li>Dropdowns for things like water type, entry and gas</li>
-    <li>Empty basics are shaded yellow, so gaps are easy to spot and fill</li>
-    <li>A Summary tab that adds up your dives, hours underwater and deepest dive</li>
-    <li>A Field Guide tab that explains every column</li>
-  </ul>
-</div></section>
-
-
 <section class="band"><div class="wrap">
   <div class="promise">
     <img src="img/turtle-wave.png" alt="" width="438" height="379" style="width:110px">

@@ -355,3 +355,8 @@ input[type=number] { width: 90px; }
 .related h2 { font-size: var(--step-1); margin-bottom: 10px; }
 .rel-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px 20px; }
 .rel-list a { font-weight: 700; }
+
+/* Home: New this week */
+.newlist { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.newlist a { font-weight: 700; }
+.newlist li > span { display: block; margin-top: 2px; }
